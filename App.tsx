@@ -565,7 +565,7 @@ const WorkflowSection = () => {
   const currentStepColor = getStepColor(activeStep);
 
   return (
-    <section id="workflow" className="py-16 md:py-32 bg-white">
+    <section id="workflow" className="py-12 md:py-32 bg-white overflow-x-hidden">
       <div className="container mx-auto px-4 md:px-8">
         <SectionHeading 
           badge="Prozess"
@@ -573,8 +573,8 @@ const WorkflowSection = () => {
           subtitle="Vom Dokumenteneingang bis zur strukturierten Ablage – so arbeitet unsere Visual AI."
         />
         
-        <div className="flex flex-col lg:flex-row gap-6 lg:gap-8 items-stretch">
-          <div className="lg:w-1/3 flex lg:flex-col gap-2 md:gap-3">
+        <div className="flex flex-col lg:flex-row gap-4 lg:gap-8 items-start lg:items-stretch">
+          <div className="w-full lg:w-1/3 flex flex-col gap-2">
             {WORKFLOW_STEPS.map((step, idx) => {
               const color = getStepColor(idx);
               const isActive = activeStep === idx;
@@ -582,71 +582,63 @@ const WorkflowSection = () => {
               <button 
                 key={step.id}
                 onClick={() => setActiveStep(idx)}
-                className={`flex-1 lg:flex-none text-left p-2 md:p-6 rounded-[24px] transition-all duration-300 flex flex-col lg:flex-row items-center lg:items-center gap-2 md:gap-5 justify-center lg:justify-start ${isActive ? `bg-${color}-50 border border-${color}-100` : 'bg-transparent border border-transparent hover:bg-slate-50'}`}
+                className={`text-left p-3 md:p-4 rounded-lg md:rounded-2xl transition-all duration-300 flex items-center gap-3 md:gap-4 ${isActive ? `bg-${color}-50 border border-${color}-200` : 'bg-slate-50 border border-slate-200 hover:bg-slate-100'}`}
               >
-                <div className={`w-9 h-9 md:w-12 md:h-12 rounded-xl flex items-center justify-center shrink-0 font-bold text-xs md:text-lg ${isActive ? `bg-${color}-600 text-white shadow-lg` : 'bg-slate-100 text-slate-400'}`}>
+                <div className={`w-8 h-8 md:w-10 md:h-10 rounded-lg flex items-center justify-center shrink-0 font-bold text-xs md:text-sm ${isActive ? `bg-${color}-600 text-white` : 'bg-slate-200 text-slate-500'}`}>
                   {idx + 1}
                 </div>
-                <div className="text-center lg:text-left">
-                  <h5 className={`font-bold text-[11px] md:text-[17px] leading-tight ${isActive ? `text-${color}-900` : 'text-slate-600'}`}>{step.shortTitle || step.title}</h5>
+                <div className="text-left">
+                  <h5 className={`font-bold text-xs md:text-sm leading-tight ${isActive ? `text-${color}-900` : 'text-slate-600'}`}>{step.shortTitle || step.title}</h5>
                 </div>
               </button>
             )})}
           </div>
 
-          <div className="lg:w-2/3 bg-slate-50 rounded-[24px] md:rounded-[40px] p-4 md:p-12 lg:p-16 border border-slate-100 relative overflow-hidden reveal">
+          <div className="w-full lg:w-2/3 bg-gradient-to-br from-slate-50 to-slate-100 rounded-2xl md:rounded-3xl p-4 md:p-8 lg:p-12 border border-slate-200 relative overflow-hidden reveal min-h-fit">
             <div className={`absolute top-0 right-0 w-64 h-64 bg-${currentStepColor}-100/30 rounded-full blur-[80px] -translate-y-1/2 translate-x-1/2`}></div>
             
-            <div className="relative z-10 h-full flex flex-col">
-              <div className={`w-12 md:w-20 h-12 md:h-20 bg-white rounded-2xl md:rounded-3xl flex items-center justify-center text-${currentStepColor}-600 shadow-lg md:shadow-xl md:shadow-${currentStepColor}-100 mb-4 md:mb-10`}>
-                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" className="md:w-10 md:h-10">
+            <div className="relative z-10 flex flex-col">
+              <div className={`w-10 md:w-16 h-10 md:h-16 bg-white rounded-xl md:rounded-2xl flex items-center justify-center text-${currentStepColor}-600 shadow-md mb-3 md:mb-6`}>
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" className="md:w-8 md:h-8">
                   {WORKFLOW_STEPS[activeStep].icon}
                 </svg>
               </div>
-              <h4 className="text-lg md:text-3xl font-extrabold mb-2 md:mb-6 text-slate-900 tracking-tight">{WORKFLOW_STEPS[activeStep].title}</h4>
-              <p className="text-xs md:text-xl text-slate-500 leading-relaxed mb-6 md:mb-12 max-w-xl">{WORKFLOW_STEPS[activeStep].description}</p>
+              <h4 className="text-base md:text-2xl font-extrabold mb-2 md:mb-4 text-slate-900">{WORKFLOW_STEPS[activeStep].title}</h4>
+              <p className="text-xs md:text-base text-slate-600 leading-relaxed mb-4 md:mb-8 max-w-2xl">{WORKFLOW_STEPS[activeStep].description}</p>
               
               {/* Step 5: Storage Options */}
               {WORKFLOW_STEPS[activeStep].id === 5 && (
-                <div className="mb-4 md:mb-8 animate-in slide-in-from-bottom-2 fade-in duration-500">
-                  <div className="text-[8px] md:text-[10px] font-bold text-slate-400 uppercase tracking-[0.2em] mb-2 md:mb-4">Ablage in bestehenden Systemen</div>
-                  <div className="grid grid-cols-2 sm:grid-cols-2 gap-1.5 md:gap-3">
-                     {/* Local Systems */}
-                     <div className="bg-white px-2 md:px-4 py-1.5 md:py-3 rounded-lg md:rounded-xl border border-slate-100 shadow-sm flex flex-col md:flex-row items-center md:items-center gap-1.5 md:gap-4 group hover:border-slate-300 hover:shadow-md transition-all">
-                        <div className="w-7 md:w-10 h-7 md:h-10 rounded-lg bg-slate-50 flex items-center justify-center text-slate-600 group-hover:bg-blue-50 group-hover:text-blue-600 group-hover:scale-105 transition-all duration-300 shrink-0">
-                           <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" className="md:w-[18px] md:h-[18px]"><rect x="2" y="2" width="20" height="8" rx="2" ry="2" /><rect x="2" y="14" width="20" height="8" rx="2" ry="2" /><line x1="6" y1="6" x2="6.01" y2="6" /><line x1="6" y1="18" x2="6.01" y2="18" /></svg>
+                <div className="mb-4 animate-in slide-in-from-bottom-2 fade-in duration-500">
+                  <div className="text-[7px] md:text-xs font-bold text-slate-500 uppercase tracking-wider mb-2 md:mb-3">Ablage</div>
+                  <div className="grid grid-cols-2 gap-2 md:gap-3">
+                     <button className="bg-white px-2 md:px-3 py-1.5 md:py-2 rounded-md md:rounded-lg border border-slate-200 hover:border-slate-300 transition-all text-left">
+                        <div className="w-6 h-6 md:w-8 md:h-8 rounded-md bg-slate-100 flex items-center justify-center text-slate-600 mb-1">
+                           <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" className="md:w-4 md:h-4"><rect x="2" y="2" width="20" height="8" rx="2" ry="2" /><rect x="2" y="14" width="20" height="8" rx="2" ry="2" /><line x1="6" y1="6" x2="6.01" y2="6" /><line x1="6" y1="18" x2="6.01" y2="18" /></svg>
                         </div>
-                        <div className="text-center md:text-left">
-                          <div className="font-bold text-slate-800 text-[9px] md:text-sm mb-0.5">Lokal</div>
-                          <div className="text-[7px] md:text-[11px] font-medium text-slate-400 hidden md:block">Server, Netzwerk…</div>
-                        </div>
-                     </div>
+                        <div className="font-bold text-slate-800 text-[8px] md:text-xs">Lokal</div>
+                     </button>
 
-                     {/* Cloud Systems */}
-                     <div className="bg-white px-2 md:px-4 py-1.5 md:py-3 rounded-lg md:rounded-xl border border-slate-100 shadow-sm flex flex-col md:flex-row items-center md:items-center gap-1.5 md:gap-4 group hover:border-slate-300 hover:shadow-md transition-all">
-                        <div className="w-7 md:w-10 h-7 md:h-10 rounded-lg bg-slate-50 flex items-center justify-center text-slate-600 group-hover:bg-indigo-50 group-hover:text-indigo-600 group-hover:scale-105 transition-all duration-300 shrink-0">
-                           <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" className="md:w-[18px] md:h-[18px]"><path d="M18 10h-1.26A8 8 0 1 0 9 20h9a5 5 0 0 0 0-10z"/></svg>
+                     <button className="bg-white px-2 md:px-3 py-1.5 md:py-2 rounded-md md:rounded-lg border border-slate-200 hover:border-slate-300 transition-all text-left">
+                        <div className="w-6 h-6 md:w-8 md:h-8 rounded-md bg-slate-100 flex items-center justify-center text-slate-600 mb-1">
+                           <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" className="md:w-4 md:h-4"><path d="M18 10h-1.26A8 8 0 1 0 9 20h9a5 5 0 0 0 0-10z"/></svg>
                         </div>
-                         <div className="text-center md:text-left">
-                          <div className="font-bold text-slate-800 text-[9px] md:text-sm mb-0.5">Cloud</div>
-                          <div className="text-[7px] md:text-[11px] font-medium text-slate-400 hidden md:block">OneDrive, SharePoint…</div>
-                        </div>
-                     </div>
+                        <div className="font-bold text-slate-800 text-[8px] md:text-xs">Cloud</div>
+                     </button>
                   </div>
                 </div>
               )}
 
               {WORKFLOW_STEPS[activeStep].channels && (
-                <div className="mt-auto space-y-2 md:space-y-6">
-                  <div className="text-[8px] md:text-xs font-bold text-slate-400 uppercase tracking-[0.2em] mb-2 md:mb-4">Beispielhafte Eingangskanäle</div>
-                  <div className="grid grid-cols-1 gap-1.5 md:gap-4">
+                <div className="mt-4 md:mt-6 space-y-2 md:space-y-3">
+                  <div className="text-[7px] md:text-xs font-bold text-slate-500 uppercase tracking-wider mb-2 md:mb-3">Kanäle</div>
+                  <div className="grid grid-cols-1 gap-1.5 md:gap-3">
                     {WORKFLOW_STEPS[activeStep].channels?.map((channel, idx) => (
-                      <div key={idx} className={`flex flex-col md:flex-row md:items-center justify-between gap-1 md:gap-8 bg-white/50 p-2 md:p-6 rounded-lg md:rounded-2xl border border-slate-100 group/item hover:bg-white hover:shadow-md transition-all duration-300`}>
-                        <div className="flex items-center gap-1.5 md:gap-3">
-                          <div className={`w-1.5 h-4 md:h-6 bg-${currentStepColor}-500 rounded-full`}></div>
-                          <span className="text-slate-900 font-bold text-[10px] md:text-[15px]">{channel.label}</span>
+                      <div key={idx} className={`flex items-center gap-2 md:gap-3 bg-white p-2 md:p-3 rounded-lg md:rounded-xl border border-slate-200 hover:border-slate-300 transition-all`}>
+                        <div className={`w-1 h-4 md:h-5 bg-${currentStepColor}-500 rounded-full shrink-0`}></div>
+                        <div className="flex-1 min-w-0">
+                          <span className="text-slate-900 font-semibold text-[9px] md:text-sm block truncate">{channel.label}</span>
+                          <span className="text-slate-500 text-[7px] md:text-xs hidden md:block">{channel.content}</span>
                         </div>
-                        <span className="text-slate-500 text-[9px] md:text-sm font-medium">{channel.content}</span>
                       </div>
                     ))}
                   </div>
@@ -654,20 +646,20 @@ const WorkflowSection = () => {
               )}
 
               {WORKFLOW_STEPS[activeStep].capabilities && (
-                <div className="mt-auto space-y-2 md:space-y-6">
-                  <div className="text-[8px] md:text-xs font-bold text-slate-400 uppercase tracking-[0.2em] mb-2 md:mb-4">Diese Informationen erkennt die Visual AI</div>
-                  <div className="grid grid-cols-1 gap-1.5 md:gap-4">
+                <div className="mt-4 md:mt-6 space-y-2 md:space-y-3">
+                  <div className="text-[7px] md:text-xs font-bold text-slate-500 uppercase tracking-wider mb-2 md:mb-3">Features</div>
+                  <div className="grid grid-cols-1 gap-1.5 md:gap-3">
                     {WORKFLOW_STEPS[activeStep].capabilities?.map((cap, idx) => (
-                      <div key={idx} className={`bg-white p-2 md:p-6 rounded-lg md:rounded-2xl border border-slate-100 shadow-sm hover:shadow-md hover:border-${currentStepColor}-100 transition-all duration-300`}>
-                        <div className="flex items-start gap-2 md:gap-4">
-                          <div className={`w-6 md:w-8 h-6 md:h-8 rounded-lg bg-${currentStepColor}-50 flex items-center justify-center shrink-0 mt-0.5`}>
-                            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" className={`text-${currentStepColor}-600 md:w-[18px] md:h-[18px]`}>
+                      <div key={idx} className={`bg-white p-2 md:p-3 rounded-lg md:rounded-xl border border-slate-200 hover:border-slate-300 transition-all`}>
+                        <div className="flex items-start gap-2 md:gap-3">
+                          <div className={`w-5 md:w-6 h-5 md:h-6 rounded-md bg-${currentStepColor}-50 flex items-center justify-center shrink-0 mt-0.5`}>
+                            <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" className={`text-${currentStepColor}-600 md:w-3 md:h-3`}>
                               <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14" /><polyline points="22 4 12 14.01 9 11.01" />
                             </svg>
                           </div>
-                          <div>
-                            <h5 className="font-bold text-slate-900 mb-0.5 text-[10px] md:text-base">{cap.label}</h5>
-                            <p className="text-slate-500 text-[8px] md:text-sm leading-relaxed">{cap.content}</p>
+                          <div className="flex-1 min-w-0">
+                            <h5 className="font-bold text-slate-900 text-[8px] md:text-sm">{cap.label}</h5>
+                            <p className="text-slate-600 text-[7px] md:text-xs leading-snug hidden md:block">{cap.content}</p>
                           </div>
                         </div>
                       </div>
