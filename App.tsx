@@ -74,36 +74,78 @@ const Hero = () => (
         <h1 className="text-2xl sm:text-3xl md:text-5xl lg:text-7xl font-extrabold text-slate-900 leading-[1.15] sm:leading-[1.1] md:leading-[1.05] tracking-tight mb-3 sm:mb-4 md:mb-6 lg:mb-8">
           The intelligence for <br className="block md:inline"/><span className="text-slate-400">business documents.</span>
         </h1>
-        <p className="text-[13px] sm:text-sm md:text-lg lg:text-xl text-slate-500 mb-5 sm:mb-6 md:mb-8 lg:mb-12 max-w-2xl mx-auto leading-relaxed px-1 sm:px-2">
-          <span className="block text-slate-900 font-semibold mb-1 sm:mb-1.5 md:mb-2 lg:mb-3">Von Eingang bis Ablage</span>
+        <p className="text-sm sm:text-sm md:text-lg lg:text-xl text-slate-500 mb-5 sm:mb-6 md:mb-8 lg:mb-12 max-w-2xl mx-auto leading-relaxed px-1 sm:px-2">
+          <span className="block text-slate-900 font-semibold mb-1.5 sm:mb-1.5 md:mb-2 lg:mb-3 text-base sm:text-base md:text-lg lg:text-xl">Von Eingang bis Ablage</span>
           Visuelle AI versteht Dokumente, extrahiert relevante Informationen, <br className="hidden md:block"/>
           benennt sie automatisch und legt sie strukturiert ab.
         </p>
         <div className="flex flex-col sm:flex-row flex-wrap items-center justify-center gap-3 md:gap-5 mb-8 sm:mb-10 md:mb-16">
-          <Button variant="primary" className="px-6 md:px-10 py-3 md:py-4 shadow-2xl w-full sm:w-auto text-sm md:text-base" onClick={() => window.location.href='#workflow'}>
+          <Button variant="primary" className="hidden sm:flex px-6 md:px-10 py-3 md:py-4 shadow-2xl w-full sm:w-auto text-sm md:text-base" onClick={() => window.location.href='#workflow'}>
             Workflow ansehen
             <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5"><path d="M5 12h14m-7-7 7 7-7 7"/></svg>
           </Button>
           <button 
-             className="px-6 md:px-10 py-3 md:py-4 rounded-2xl font-semibold transition-all duration-300 active:scale-[0.97] flex items-center justify-center gap-2 text-sm md:text-base bg-slate-400 text-white shadow-2xl shadow-slate-200 hover:bg-indigo-600 hover:shadow-indigo-200 w-full sm:w-auto"
+             className="px-4 sm:px-6 md:px-10 py-2.5 sm:py-3 md:py-4 rounded-2xl font-semibold transition-all duration-300 active:scale-[0.97] flex items-center justify-center gap-2 text-xs sm:text-sm md:text-base bg-slate-400 text-white shadow-2xl shadow-slate-200 hover:bg-indigo-600 hover:shadow-indigo-200 w-full sm:w-auto"
              onClick={() => window.location.href='#live-test'}
           >
             Live testen
-            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5"><path d="M5 12h14m-7-7 7 7-7 7"/></svg>
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5"><path d="M5 12h14m-7-7 7 7-7 7"/></svg>
           </button>
         </div>
       </div>
 
       {/* Hero Visual Panel - Following Dribbble Style */}
       <div className="relative max-w-6xl mx-auto reveal" style={{ transitionDelay: '0.2s' }}>
-        <div className="visual-panel-gradient rounded-[24px] sm:rounded-[32px] md:rounded-[40px] p-1.5 sm:p-2 border border-slate-100 shadow-2xl overflow-hidden min-h-[250px] sm:min-h-[300px] md:min-h-[400px] flex items-center justify-center relative">
+        {/* Mobile Version - Compact */}
+        <div className="sm:hidden visual-panel-gradient rounded-[20px] p-2 border border-slate-100 shadow-lg overflow-hidden min-h-[180px] flex items-center justify-center relative">
+          <svg className="absolute opacity-[0.02] pointer-events-none" width="100%" height="100%" viewBox="0 0 800 400">
+            <path d="M0 200 Q 200 100 400 200 T 800 200" fill="none" stroke="#4f46e5" strokeWidth="2" />
+            <path d="M0 250 Q 200 150 400 250 T 800 250" fill="none" stroke="#f59e0b" strokeWidth="1" />
+          </svg>
+          
+          <div className="relative z-10 w-full flex flex-col items-center justify-center gap-3 p-4">
+            {/* Central Box - Mobile */}
+            <div className="bg-white rounded-xl p-4 border border-white shadow-lg w-full max-w-xs">
+              <div className="flex flex-col items-center text-center">
+                <div className="w-10 h-10 rounded-lg bg-slate-900 flex items-center justify-center text-white mb-2 shrink-0">
+                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5"><path d="M21 12V7a2 2 0 0 0-2-2H5a2 2 0 0 0-2 2v10a2 2 0 0 0 2 2h7"/><path d="m16 19 2 2 4-4"/></svg>
+                </div>
+                <span className="font-bold text-slate-900 block mb-0.5 text-sm">Visual AI Logic</span>
+                <span className="text-[10px] text-slate-400 font-medium tracking-wide uppercase mb-2">Context detected</span>
+                <div className="flex gap-1">
+                  {[1,2,3,4].map(i => <div key={i} className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse" style={{animationDelay: `${i*0.2}s`}}></div>)}
+                </div>
+              </div>
+            </div>
+            
+            {/* Stats Row - Mobile */}
+            <div className="flex gap-2 w-full text-[10px]">
+              <div className="flex-1 bg-white/80 backdrop-blur rounded-lg p-2.5 border border-white shadow-sm text-center">
+                <div className="font-bold text-slate-700 text-xs">Extraktion</div>
+                <div className="text-blue-600 font-bold text-[11px]">€ 1.250</div>
+              </div>
+              <div className="flex-1 bg-white/80 backdrop-blur rounded-lg p-2.5 border border-white shadow-sm text-center">
+                <div className="font-bold text-slate-700 text-xs">Validierung</div>
+                <div className="text-emerald-600 font-bold text-[11px]">✓ OK</div>
+              </div>
+            </div>
+          </div>
+          
+          <div className="absolute top-2 right-2 bg-slate-900 text-white px-2.5 py-1.5 rounded-lg text-[9px] font-bold flex items-center gap-1.5 shadow-xl">
+            <span className="w-1 h-1 rounded-full bg-emerald-400"></span>
+            <span>99.8%</span>
+          </div>
+        </div>
+
+        {/* Desktop Version - Full Featured */}
+        <div className="hidden sm:block visual-panel-gradient rounded-[24px] sm:rounded-[32px] md:rounded-[40px] p-1.5 sm:p-2 border border-slate-100 shadow-2xl overflow-hidden min-h-[250px] sm:min-h-[300px] md:min-h-[400px] flex items-center justify-center relative">
            <svg className="absolute opacity-[0.03] pointer-events-none" width="100%" height="100%" viewBox="0 0 800 400">
              <path d="M0 200 Q 200 100 400 200 T 800 200" fill="none" stroke="#4f46e5" strokeWidth="2" />
              <path d="M0 250 Q 200 150 400 250 T 800 250" fill="none" stroke="#f59e0b" strokeWidth="1" />
            </svg>
            
            <div className="relative z-10 w-full grid grid-cols-1 sm:grid-cols-3 gap-3 sm:gap-6 md:gap-8 p-4 sm:p-8 md:p-12">
-              <div className="bg-white/80 backdrop-blur rounded-2xl sm:rounded-3xl p-4 sm:p-6 border border-white shadow-lg transform -rotate-2 hidden sm:block">
+              <div className="bg-white/80 backdrop-blur rounded-2xl sm:rounded-3xl p-4 sm:p-6 border border-white shadow-lg transform -rotate-2">
                 <div className="flex items-center gap-3 mb-3 sm:mb-4">
                   <div className="w-6 sm:w-8 h-6 sm:h-8 rounded-lg bg-blue-600 flex items-center justify-center text-white shrink-0">
                     <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5"><path d="M12 1v22m5-18H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>
@@ -130,7 +172,7 @@ const Hero = () => (
                 </div>
               </div>
 
-              <div className="bg-white/80 backdrop-blur rounded-2xl sm:rounded-3xl p-4 sm:p-6 border border-white shadow-lg transform rotate-2 hidden sm:block">
+              <div className="bg-white/80 backdrop-blur rounded-2xl sm:rounded-3xl p-4 sm:p-6 border border-white shadow-lg transform rotate-2">
                 <div className="flex items-center gap-3 mb-3 sm:mb-4">
                   <div className="w-6 sm:w-8 h-6 sm:h-8 rounded-lg bg-emerald-500 flex items-center justify-center text-white shrink-0">
                     <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
