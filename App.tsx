@@ -1000,9 +1000,14 @@ const StepToStart = () => {
   const [isDragging, setIsDragging] = useState(false);
   const [isAnalyzing, setIsAnalyzing] = useState(false);
   const [analysisResult, setAnalysisResult] = useState<{
-    summary: string;
-    category: string;
-    extractedData: { label: string; value: string }[];
+    absender: string;
+    empfaenger: string;
+    dokumententyp: string;
+    dokumentKategorie: string;
+    datum: string;
+    rechnungsnummer?: string;
+    betrag?: string;
+    buchungsvorschlag?: string;
     suggestedName: string;
   } | null>(null);
   const [error, setError] = useState<string | null>(null);
@@ -1140,9 +1145,24 @@ const StepToStart = () => {
               content: [
                 {
                   type: 'text',
-                  text: `Analysiere dieses Dokument kurz. Antworte NUR mit JSON:
-{"summary":"1 Satz","category":"Rechnung/Vertrag/etc.","extractedData":[{"label":"Feld","value":"Wert"}],"suggestedName":"Dateiname"}
-Nur 5-8 wichtige Felder. Für suggestedName: Erstelle einen aussagekräftigen Dateinamen basierend auf Dokumentinhalt (z.B. "2024-01-15_Rechnung_Firma-XY_500EUR" oder "Mietvertrag_Musterstr-10_2024"). Format: Datum_Typ_Details. Keine Sonderzeichen außer Bindestrich und Unterstrich.`
+                  text: `Analysiere dieses Dokument und extrahiere folgende Informationen. Antworte NUR mit JSON in diesem exakten Format:
+
+{
+  "absender": "Name/Firma des Absenders",
+  "empfaenger": "Name/Firma des Empfängers",
+  "dokumententyp": "Der genaue Typ (z.B. Mahnung, Zahlungserinnerung, Mitteilung, Rechnung, Lieferschein, Vertrag, etc.)",
+  "dokumentKategorie": "MUSS einer dieser Werte sein: Rechnungen, Steuerdokument, Buchhaltungsdokumente, Sonstige",
+  "datum": "Datum im Format YYYY-MM-DD",
+  "rechnungsnummer": "nur wenn es eine Rechnung ist",
+  "betrag": "nur wenn es eine Rechnung ist, Format: 1234.56",
+  "buchungsvorschlag": "nur wenn es eine Rechnung ist: Buchungssatz basierend auf SKR03 (z.B. 'Soll: 1400 Forderungen / Haben: 8400 Erlöse 19% USt + 1776 USt 19%')",
+  "suggestedName": "Dateiname im Format: YYYY-MM-DD_Dokumententyp_Absender_Details"
+}
+
+WICHTIG: 
+- dokumentKategorie muss EXAKT einer dieser Werte sein: Rechnungen, Steuerdokument, Buchhaltungsdokumente, Sonstige
+- rechnungsnummer, betrag und buchungsvorschlag NUR bei Rechnungen angeben, sonst weglassen
+- Für buchungsvorschlag verwende SKR03 Kontenrahmen: häufige Konten sind z.B. 1400 (Forderungen), 1600 (Verbindlichkeiten), 8400 (Erlöse 19%), 1776 (USt 19%), 1576 (Vorsteuer 19%), 4930 (Bürobedarf), 4910 (Porto), 4920 (Telekom), 4210 (Miete), etc.`
                 },
                 {
                   type: 'image_url',
@@ -1154,7 +1174,7 @@ Nur 5-8 wichtige Felder. Für suggestedName: Erstelle einen aussagekräftigen Da
               ]
             }
           ],
-          max_tokens: 600,
+          max_tokens: 800,
           temperature: 0.1
         })
       });
@@ -1363,67 +1383,135 @@ Nur 5-8 wichtige Felder. Für suggestedName: Erstelle einen aussagekräftigen Da
              {analysisResult && (
                <div className="space-y-4 animate-in slide-in-from-bottom-4 fade-in duration-500">
                  
-                 {/* Summary Card */}
-                 <div className="bg-white rounded-2xl p-6 border border-slate-100 shadow-sm">
-                   <div className="flex items-start gap-4">
-                     <div className="w-10 h-10 bg-blue-100 rounded-xl flex items-center justify-center shrink-0">
-                       <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" className="text-blue-600">
-                         <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>
-                         <path d="M14 2v6h6"/>
-                         <path d="M16 13H8"/>
-                         <path d="M16 17H8"/>
-                         <path d="M10 9H8"/>
-                       </svg>
-                     </div>
-                     <div className="flex-1">
-                       <div className="text-[11px] font-bold text-slate-400 uppercase tracking-wider mb-1">Kurze Zusammenfassung</div>
-                       <p className="text-slate-700 font-medium leading-relaxed">{analysisResult.summary}</p>
-                     </div>
-                   </div>
-                 </div>
-
-                 {/* Category Card */}
-                 <div className="bg-white rounded-2xl p-6 border border-slate-100 shadow-sm">
-                   <div className="flex items-center gap-4">
-                     <div className="w-10 h-10 bg-indigo-100 rounded-xl flex items-center justify-center shrink-0">
-                       <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" className="text-indigo-600">
-                         <path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"/>
-                       </svg>
-                     </div>
-                     <div className="flex-1">
-                       <div className="text-[11px] font-bold text-slate-400 uppercase tracking-wider mb-1">Dokumenten-Kategorie</div>
-                       <div className="inline-flex items-center gap-2">
-                         <span className="text-slate-900 font-bold text-lg">{analysisResult.category}</span>
-                         <span className="px-2 py-0.5 bg-indigo-50 text-indigo-600 text-[10px] font-bold rounded-full uppercase">KI erkannt</span>
+                 {/* Basis-Informationen Grid */}
+                 <div className="grid gap-4 sm:grid-cols-2">
+                   
+                   {/* Absender */}
+                   <div className="bg-white rounded-2xl p-6 border border-slate-100 shadow-sm">
+                     <div className="flex items-start gap-4">
+                       <div className="w-10 h-10 bg-blue-100 rounded-xl flex items-center justify-center shrink-0">
+                         <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" className="text-blue-600">
+                           <path d="M16 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/>
+                           <circle cx="8.5" cy="7" r="4"/>
+                           <line x1="20" y1="8" x2="20" y2="14"/>
+                           <line x1="23" y1="11" x2="17" y2="11"/>
+                         </svg>
+                       </div>
+                       <div className="flex-1">
+                         <div className="text-[11px] font-bold text-slate-400 uppercase tracking-wider mb-1">Absender</div>
+                         <p className="text-slate-900 font-bold text-lg">{analysisResult.absender}</p>
                        </div>
                      </div>
                    </div>
+
+                   {/* Empfänger */}
+                   <div className="bg-white rounded-2xl p-6 border border-slate-100 shadow-sm">
+                     <div className="flex items-start gap-4">
+                       <div className="w-10 h-10 bg-green-100 rounded-xl flex items-center justify-center shrink-0">
+                         <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" className="text-green-600">
+                           <path d="M16 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/>
+                           <circle cx="8.5" cy="7" r="4"/>
+                           <polyline points="17 11 19 13 23 9"/>
+                         </svg>
+                       </div>
+                       <div className="flex-1">
+                         <div className="text-[11px] font-bold text-slate-400 uppercase tracking-wider mb-1">Empfänger</div>
+                         <p className="text-slate-900 font-bold text-lg">{analysisResult.empfaenger}</p>
+                       </div>
+                     </div>
+                   </div>
+
+                   {/* Dokumententyp */}
+                   <div className="bg-white rounded-2xl p-6 border border-slate-100 shadow-sm">
+                     <div className="flex items-start gap-4">
+                       <div className="w-10 h-10 bg-purple-100 rounded-xl flex items-center justify-center shrink-0">
+                         <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" className="text-purple-600">
+                           <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>
+                           <path d="M14 2v6h6"/>
+                           <path d="M16 13H8"/>
+                           <path d="M16 17H8"/>
+                           <path d="M10 9H8"/>
+                         </svg>
+                       </div>
+                       <div className="flex-1">
+                         <div className="text-[11px] font-bold text-slate-400 uppercase tracking-wider mb-1">Dokumententyp</div>
+                         <p className="text-slate-900 font-bold text-lg">{analysisResult.dokumententyp}</p>
+                       </div>
+                     </div>
+                   </div>
+
+                   {/* Dokument-Kategorie */}
+                   <div className="bg-white rounded-2xl p-6 border border-slate-100 shadow-sm">
+                     <div className="flex items-start gap-4">
+                       <div className="w-10 h-10 bg-indigo-100 rounded-xl flex items-center justify-center shrink-0">
+                         <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" className="text-indigo-600">
+                           <path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"/>
+                         </svg>
+                       </div>
+                       <div className="flex-1">
+                         <div className="text-[11px] font-bold text-slate-400 uppercase tracking-wider mb-1">Dokument-Kategorie</div>
+                         <div className="inline-flex items-center gap-2">
+                           <span className="text-slate-900 font-bold text-lg">{analysisResult.dokumentKategorie}</span>
+                           <span className="px-2 py-0.5 bg-indigo-50 text-indigo-600 text-[10px] font-bold rounded-full uppercase">KI</span>
+                         </div>
+                       </div>
+                     </div>
+                   </div>
+
+                   {/* Datum */}
+                   <div className="bg-white rounded-2xl p-6 border border-slate-100 shadow-sm">
+                     <div className="flex items-start gap-4">
+                       <div className="w-10 h-10 bg-orange-100 rounded-xl flex items-center justify-center shrink-0">
+                         <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" className="text-orange-600">
+                           <rect x="3" y="4" width="18" height="18" rx="2" ry="2"/>
+                           <line x1="16" y1="2" x2="16" y2="6"/>
+                           <line x1="8" y1="2" x2="8" y2="6"/>
+                           <line x1="3" y1="10" x2="21" y2="10"/>
+                         </svg>
+                       </div>
+                       <div className="flex-1">
+                         <div className="text-[11px] font-bold text-slate-400 uppercase tracking-wider mb-1">Datum</div>
+                         <p className="text-slate-900 font-bold text-lg">{analysisResult.datum}</p>
+                       </div>
+                     </div>
+                   </div>
+
                  </div>
 
-                 {/* Extracted Data Card */}
-                 <div className="bg-white rounded-2xl p-6 border border-slate-100 shadow-sm">
-                   <div className="flex items-start gap-4 mb-4">
-                     <div className="w-10 h-10 bg-emerald-100 rounded-xl flex items-center justify-center shrink-0">
-                       <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" className="text-emerald-600">
-                         <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>
-                         <path d="M14 2v6h6"/>
-                         <path d="M12 18v-6"/>
-                         <path d="M9 15h6"/>
-                       </svg>
-                     </div>
-                     <div className="flex-1">
-                       <div className="text-[11px] font-bold text-slate-400 uppercase tracking-wider mb-1">Extrahierte Informationen (Beispielhaft)</div>
-                     </div>
-                   </div>
-                   <div className="grid gap-3 sm:grid-cols-2">
-                     {analysisResult.extractedData.map((item, idx) => (
-                       <div key={idx} className="bg-slate-50 rounded-xl p-4 border border-slate-100">
-                         <div className="text-[10px] font-bold text-slate-400 uppercase tracking-wider mb-1">{item.label}</div>
-                         <div className="text-slate-900 font-semibold text-sm break-words">{item.value}</div>
+                 {/* Rechnungsspezifische Informationen - nur bei Rechnungen */}
+                 {analysisResult.rechnungsnummer && (
+                   <div className="bg-gradient-to-br from-emerald-50 to-teal-50 rounded-2xl p-6 border-2 border-emerald-200 shadow-sm">
+                     <div className="flex items-center gap-3 mb-4">
+                       <div className="w-10 h-10 bg-emerald-500 rounded-xl flex items-center justify-center shrink-0">
+                         <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" className="text-white">
+                           <rect x="1" y="4" width="22" height="16" rx="2" ry="2"/>
+                           <line x1="1" y1="10" x2="23" y2="10"/>
+                         </svg>
                        </div>
-                     ))}
+                       <h3 className="text-lg font-bold text-emerald-900">Rechnungsinformationen</h3>
+                     </div>
+                     
+                     <div className="grid gap-4 sm:grid-cols-3">
+                       {/* Rechnungsnummer */}
+                       <div className="bg-white rounded-xl p-4 border border-emerald-100">
+                         <div className="text-[10px] font-bold text-emerald-600 uppercase tracking-wider mb-1">Rechnungsnummer</div>
+                         <div className="text-slate-900 font-bold text-lg">{analysisResult.rechnungsnummer}</div>
+                       </div>
+
+                       {/* Betrag */}
+                       <div className="bg-white rounded-xl p-4 border border-emerald-100">
+                         <div className="text-[10px] font-bold text-emerald-600 uppercase tracking-wider mb-1">Betrag</div>
+                         <div className="text-slate-900 font-bold text-lg">{analysisResult.betrag} €</div>
+                       </div>
+
+                       {/* Buchungsvorschlag */}
+                       <div className="bg-white rounded-xl p-4 border border-emerald-100 sm:col-span-1">
+                         <div className="text-[10px] font-bold text-emerald-600 uppercase tracking-wider mb-1">Buchungsvorschlag (SKR03)</div>
+                         <div className="text-slate-900 font-semibold text-sm leading-relaxed">{analysisResult.buchungsvorschlag}</div>
+                       </div>
+                     </div>
                    </div>
-                 </div>
+                 )}
 
                  {/* Suggested Name Card */}
                  <div className="bg-gradient-to-r from-slate-900 to-slate-800 rounded-2xl p-6 shadow-lg">
@@ -1435,7 +1523,7 @@ Nur 5-8 wichtige Felder. Für suggestedName: Erstelle einen aussagekräftigen Da
                        </svg>
                      </div>
                      <div className="flex-1">
-                       <div className="text-[11px] font-bold text-white/50 uppercase tracking-wider mb-1">Benennungsvorschlag (Beispielhaft)</div>
+                       <div className="text-[11px] font-bold text-white/50 uppercase tracking-wider mb-1">Benennungsvorschlag</div>
                        <div className="text-white font-bold text-lg">{analysisResult.suggestedName}</div>
                      </div>
                      <button 
