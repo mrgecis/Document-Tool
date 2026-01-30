@@ -69,25 +69,25 @@ const Navbar = ({ onOpenContact }: { onOpenContact: () => void }) => {
 };
 
 const Hero = () => (
-  <section className="relative pt-44 pb-32 overflow-hidden hero-glow">
-    <div className="container mx-auto px-8">
-      <div className="max-w-4xl mx-auto text-center mb-20 reveal">
-        <Badge className="mb-6 bg-indigo-50/50 text-indigo-700 border-indigo-100 uppercase tracking-wider">Die Evolution der Dokumentenverarbeitung</Badge>
-        <h1 className="text-6xl md:text-7xl font-extrabold text-slate-900 leading-[1.05] tracking-tight mb-8">
+  <section className="relative pt-20 md:pt-44 pb-16 md:pb-32 overflow-hidden hero-glow">
+    <div className="container mx-auto px-4 md:px-8">
+      <div className="max-w-4xl mx-auto text-center mb-12 md:mb-20 reveal">
+        <Badge className="mb-4 md:mb-6 bg-indigo-50/50 text-indigo-700 border-indigo-100 uppercase tracking-wider text-xs md:text-sm">Die Evolution der Dokumentenverarbeitung</Badge>
+        <h1 className="text-3xl md:text-6xl lg:text-7xl font-extrabold text-slate-900 leading-[1.1] md:leading-[1.05] tracking-tight mb-4 md:mb-8">
           The intelligence for <br/><span className="text-slate-400">business documents.</span>
         </h1>
-        <p className="text-lg md:text-xl text-slate-500 mb-12 max-w-2xl mx-auto leading-relaxed">
-          <span className="block text-slate-900 font-semibold mb-3">Von Eingang bis Ablage</span>
+        <p className="text-sm md:text-lg lg:text-xl text-slate-500 mb-8 md:mb-12 max-w-2xl mx-auto leading-relaxed">
+          <span className="block text-slate-900 font-semibold mb-2 md:mb-3">Von Eingang bis Ablage</span>
           Visuelle AI versteht Dokumente, extrahiert relevante Informationen, <br className="hidden md:block"/>
           benennt sie automatisch und legt sie strukturiert ab.
         </p>
-        <div className="flex flex-wrap items-center justify-center gap-5">
-          <Button variant="primary" className="px-10 py-4 shadow-2xl" onClick={() => window.location.href='#workflow'}>
+        <div className="flex flex-col sm:flex-row flex-wrap items-center justify-center gap-3 md:gap-5">
+          <Button variant="primary" className="px-6 md:px-10 py-3 md:py-4 shadow-2xl w-full sm:w-auto text-sm md:text-base" onClick={() => window.location.href='#workflow'}>
             Workflow ansehen
             <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5"><path d="M5 12h14m-7-7 7 7-7 7"/></svg>
           </Button>
           <button 
-             className="px-10 py-4 rounded-2xl font-semibold transition-all duration-300 active:scale-[0.97] flex items-center justify-center gap-2 text-[15px] bg-slate-400 text-white shadow-2xl shadow-slate-200 hover:bg-indigo-600 hover:shadow-indigo-200"
+             className="px-6 md:px-10 py-3 md:py-4 rounded-2xl font-semibold transition-all duration-300 active:scale-[0.97] flex items-center justify-center gap-2 text-sm md:text-base bg-slate-400 text-white shadow-2xl shadow-slate-200 hover:bg-indigo-600 hover:shadow-indigo-200 w-full sm:w-auto"
              onClick={() => window.location.href='#live-test'}
           >
             Live testen
