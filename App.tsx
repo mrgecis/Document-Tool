@@ -1435,7 +1435,10 @@ WICHTIG:
                        </div>
                        <div className="flex-1">
                          <div className="text-[11px] font-bold text-slate-400 uppercase tracking-wider mb-1">Dokumententyp</div>
-                         <p className="text-slate-900 font-bold text-lg">{analysisResult.dokumententyp}</p>
+                         <div className="inline-flex items-center gap-2">
+                           <span className="text-slate-900 font-bold text-lg">{analysisResult.dokumententyp}</span>
+                           <span className="px-2 py-0.5 bg-purple-50 text-purple-600 text-[10px] font-bold rounded-full uppercase">KI</span>
+                         </div>
                        </div>
                      </div>
                    </div>
@@ -1450,10 +1453,7 @@ WICHTIG:
                        </div>
                        <div className="flex-1">
                          <div className="text-[11px] font-bold text-slate-400 uppercase tracking-wider mb-1">Dokument-Kategorie</div>
-                         <div className="inline-flex items-center gap-2">
-                           <span className="text-slate-900 font-bold text-lg">{analysisResult.dokumentKategorie}</span>
-                           <span className="px-2 py-0.5 bg-indigo-50 text-indigo-600 text-[10px] font-bold rounded-full uppercase">KI</span>
-                         </div>
+                         <span className="text-slate-900 font-bold text-lg">{analysisResult.dokumentKategorie}</span>
                        </div>
                      </div>
                    </div>
