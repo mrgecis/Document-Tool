@@ -36,6 +36,15 @@ const SectionHeading = ({ title, subtitle, badge, centered = true }: { title: st
   </div>
 );
 
+// --- Mobile Carousel Component ---
+const MobileCarousel = ({ children, className = "" }: { children: React.ReactNode, className?: string }) => (
+  <div className={`overflow-x-auto snap-x snap-mandatory hide-scrollbar ${className}`}>
+    <div className="flex gap-6 pb-4 -mx-4 px-4 md:hidden">
+      {children}
+    </div>
+  </div>
+);
+
 // --- Sections ---
 
 const Navbar = ({ onOpenContact }: { onOpenContact: () => void }) => {
@@ -71,7 +80,7 @@ const Hero = () => (
     <div className="container mx-auto px-4 md:px-8">
       <div className="max-w-4xl mx-auto text-center mb-8 md:mb-12 lg:mb-20 reveal">
         <Badge className="mb-3 md:mb-4 lg:mb-6 bg-indigo-50/50 text-indigo-700 border-indigo-100 uppercase tracking-wider text-[10px] md:text-xs lg:text-sm px-3 py-1.5 md:px-4 md:py-2 inline-block">Die Evolution der Dokumentenverarbeitung</Badge>
-        <h1 className="text-3xl md:text-5xl lg:text-7xl font-extrabold text-slate-900 leading-[1.1] md:leading-[1.05] tracking-tight mb-4 md:mb-6 lg:mb-8">
+        <h1 className="text-3xl md:text-5xl lg:text-7xl font-extrabold text-slate-900 leading-tight md:leading-[1.05] lg:leading-[1.1] tracking-tight mb-4 md:mb-6 lg:mb-8">
           The intelligence for <br className="block md:inline"/><span className="text-slate-400">business documents.</span>
         </h1>
         <p className="text-xs sm:text-sm md:text-lg lg:text-xl text-slate-500 mb-6 md:mb-8 lg:mb-12 max-w-2xl mx-auto leading-relaxed px-2">
@@ -85,7 +94,7 @@ const Hero = () => (
             <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5"><path d="M5 12h14m-7-7 7 7-7 7"/></svg>
           </Button>
           <button 
-             className="px-6 md:px-10 py-3 md:py-4 rounded-2xl font-semibold transition-all duration-300 active:scale-[0.97] flex items-center justify-center gap-2 text-sm md:text-base bg-slate-400 text-white shadow-2xl shadow-slate-200 hover:bg-indigo-600 hover:shadow-indigo-200 w-full sm:w-auto"
+             className="px-6 md:px-10 py-3 md:py-4 rounded-2xl font-semibold transition-all duration-300 active:scale-[0.95] flex items-center justify-center gap-2 text-sm md:text-base bg-slate-400 text-white shadow-2xl shadow-slate-200 hover:bg-indigo-600 hover:shadow-indigo-200 w-full sm:w-auto"
              onClick={() => window.location.href='#live-test'}
           >
             Live testen
@@ -103,7 +112,7 @@ const Hero = () => (
            </svg>
            
            <div className="relative z-10 w-full grid grid-cols-1 md:grid-cols-3 gap-8 p-12">
-              <div className="bg-white/80 backdrop-blur rounded-3xl p-6 border border-white shadow-lg transform -rotate-2">
+              <div className="bg-white/80 backdrop-blur rounded-3xl p-6 border border-white shadow-lg transform md:-rotate-2">
                 <div className="flex items-center gap-3 mb-4">
                   <div className="w-8 h-8 rounded-lg bg-blue-600 flex items-center justify-center text-white">
                     <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5"><path d="M12 1v22m5-18H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>
@@ -130,7 +139,7 @@ const Hero = () => (
                 </div>
               </div>
 
-              <div className="bg-white/80 backdrop-blur rounded-3xl p-6 border border-white shadow-lg transform rotate-2">
+              <div className="bg-white/80 backdrop-blur rounded-3xl p-6 border border-white shadow-lg transform md:rotate-2">
                 <div className="flex items-center gap-3 mb-4">
                   <div className="w-8 h-8 rounded-lg bg-emerald-500 flex items-center justify-center text-white">
                     <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
@@ -218,7 +227,9 @@ const FeaturesGrid = () => (
         title="Out-of-the-Box produktiv." 
         subtitle="Unsere Lösung ist sofort einsatzbereit und deckt die wichtigsten geschäftlichen Anforderungen nativ ab." 
       />
-      <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
+      
+      {/* Desktop Grid */}
+      <div className="hidden md:grid md:grid-cols-2 lg:grid-cols-4 gap-6">
         {FEATURES.map((f, i) => (
           <div key={i} className="soft-card p-6 rounded-[32px] hover:translate-y-[-8px] transition-all duration-500 reveal flex flex-col h-full group bg-white border border-transparent hover:border-slate-100 hover:shadow-2xl">
             
@@ -298,6 +309,44 @@ const FeaturesGrid = () => (
           </div>
         ))}
       </div>
+
+      {/* Mobile Carousel */}
+      <MobileCarousel>
+        {FEATURES.map((f, i) => (
+          <div key={i} className="soft-card p-6 rounded-[32px] flex flex-col h-full group bg-white border border-transparent min-w-[calc(100vw-2rem)] md:hidden snap-center">
+            
+            <div className="flex items-start gap-4 mb-6">
+               <div className="w-12 h-12 bg-slate-50 text-slate-600 rounded-2xl flex items-center justify-center shrink-0 border border-slate-100">
+                  <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">{f.icon}</svg>
+               </div>
+               <div className="pt-0.5">
+                   {f.label && (
+                       <div className="text-[10px] font-extrabold tracking-widest text-blue-600 uppercase mb-1">
+                         {f.label}
+                       </div>
+                   )}
+                   <h4 className="text-lg font-bold tracking-tight text-slate-900 leading-tight">{f.title}</h4>
+               </div>
+            </div>
+
+            <p className="text-slate-600 text-[14px] leading-6 mb-8 whitespace-pre-line flex-grow pl-1 font-medium">{f.description}</p>
+            
+            <div className="mt-auto pt-6 border-t border-slate-50 min-h-[80px] flex flex-col justify-end">
+              {f.items ? (
+                <div className="space-y-3">
+                  {f.intro && <div className="text-[10px] font-bold text-slate-400 uppercase tracking-wide mb-3">{f.intro}</div>}
+                  {f.items.map(item => (
+                    <div key={item} className="flex items-start gap-2.5 text-[13px] font-medium text-slate-600">
+                       <svg className="w-4 h-4 text-blue-500 shrink-0 mt-0.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+                       <span className="leading-tight">{item}</span>
+                    </div>
+                  ))}
+                </div>
+              ) : null}
+            </div>
+          </div>
+        ))}
+      </MobileCarousel>
     </div>
   </section>
 );
@@ -1729,8 +1778,253 @@ const ContactModal = ({ isOpen, onClose }: { isOpen: boolean; onClose: () => voi
   );
 };
 
+// ============================================
+// MOBILE WEB APP - Komplett separates Layout
+// ============================================
+
+const MobileNavbar = ({ onOpenContact }: { onOpenContact: () => void }) => (
+  <nav className="fixed top-0 left-0 right-0 z-50 bg-white/95 backdrop-blur-lg border-b border-slate-100 px-4 py-3">
+    <div className="flex items-center justify-between">
+      <div className="flex items-center gap-2">
+        <div className="w-8 h-8 bg-slate-900 rounded-xl flex items-center justify-center text-white font-bold">C</div>
+        <span className="font-bold text-slate-900">Certina</span>
+      </div>
+      <button 
+        onClick={onOpenContact}
+        className="bg-slate-900 text-white px-4 py-2 rounded-xl text-sm font-semibold active:scale-95 transition-transform"
+      >
+        Demo
+      </button>
+    </div>
+  </nav>
+);
+
+const MobileHero = () => (
+  <section className="pt-20 pb-8 px-4">
+    <div className="text-center">
+      <div className="inline-block bg-indigo-50 text-indigo-700 text-[10px] font-bold uppercase tracking-wider px-3 py-1.5 rounded-full mb-4">
+        Visual AI
+      </div>
+      <h1 className="text-2xl font-extrabold text-slate-900 leading-tight mb-3">
+        Intelligente Dokumenten-<br/>verarbeitung
+      </h1>
+      <p className="text-sm text-slate-500 mb-6 leading-relaxed">
+        Von Eingang bis Ablage – automatisch verstehen, extrahieren und strukturieren.
+      </p>
+      <div className="flex flex-col gap-3">
+        <button 
+          onClick={() => document.getElementById('mobile-demo')?.scrollIntoView({ behavior: 'smooth' })}
+          className="w-full bg-slate-900 text-white py-3.5 rounded-2xl font-semibold active:scale-[0.98] transition-transform"
+        >
+          Jetzt testen
+        </button>
+        <button 
+          onClick={() => document.getElementById('mobile-workflow')?.scrollIntoView({ behavior: 'smooth' })}
+          className="w-full bg-slate-100 text-slate-700 py-3.5 rounded-2xl font-semibold active:scale-[0.98] transition-transform"
+        >
+          Wie es funktioniert
+        </button>
+      </div>
+    </div>
+  </section>
+);
+
+const MobileFeatures = () => {
+  const [activeFeature, setActiveFeature] = useState(0);
+  const features = [
+    { icon: "📄", title: "Extraktion", desc: "Automatische Datenerfassung aus jedem Dokumenttyp" },
+    { icon: "✓", title: "Validierung", desc: "Prüfung gegen Stammdaten in Echtzeit" },
+    { icon: "📁", title: "Benennung", desc: "Intelligente Dateibenennung nach Schema" },
+    { icon: "🗂️", title: "Ablage", desc: "Strukturierte Speicherung im Zielsystem" },
+  ];
+
+  return (
+    <section className="py-8 px-4 bg-slate-50">
+      <h2 className="text-lg font-bold text-slate-900 mb-4 text-center">Features</h2>
+      
+      {/* Tab-Navigation */}
+      <div className="flex gap-2 overflow-x-auto hide-scrollbar pb-3 -mx-4 px-4">
+        {features.map((f, i) => (
+          <button
+            key={i}
+            onClick={() => setActiveFeature(i)}
+            className={`flex-shrink-0 px-4 py-2 rounded-full text-sm font-semibold whitespace-nowrap transition-all active:scale-95 ${
+              activeFeature === i 
+                ? 'bg-slate-900 text-white' 
+                : 'bg-white text-slate-600 border border-slate-200'
+            }`}
+          >
+            {f.icon} {f.title}
+          </button>
+        ))}
+      </div>
+      
+      {/* Active Feature Card */}
+      <div className="bg-white rounded-2xl p-5 border border-slate-100 shadow-sm">
+        <div className="text-3xl mb-3">{features[activeFeature].icon}</div>
+        <h3 className="font-bold text-slate-900 mb-2">{features[activeFeature].title}</h3>
+        <p className="text-sm text-slate-500 leading-relaxed">{features[activeFeature].desc}</p>
+      </div>
+    </section>
+  );
+};
+
+const MobileWorkflow = () => {
+  const [activeStep, setActiveStep] = useState(0);
+  const steps = [
+    { num: 1, title: "Upload", desc: "Dokument hochladen oder fotografieren" },
+    { num: 2, title: "Analyse", desc: "Visual AI erkennt Typ und Inhalt" },
+    { num: 3, title: "Extraktion", desc: "Relevante Daten werden extrahiert" },
+    { num: 4, title: "Validierung", desc: "Automatische Prüfung der Daten" },
+    { num: 5, title: "Ablage", desc: "Strukturierte Speicherung" },
+  ];
+
+  return (
+    <section id="mobile-workflow" className="py-8 px-4">
+      <h2 className="text-lg font-bold text-slate-900 mb-4 text-center">So funktioniert's</h2>
+      
+      {/* Step Indicators */}
+      <div className="flex justify-center gap-2 mb-6">
+        {steps.map((_, i) => (
+          <button
+            key={i}
+            onClick={() => setActiveStep(i)}
+            className={`w-8 h-8 rounded-full font-bold text-sm transition-all active:scale-90 ${
+              activeStep === i 
+                ? 'bg-blue-600 text-white' 
+                : 'bg-slate-100 text-slate-400'
+            }`}
+          >
+            {i + 1}
+          </button>
+        ))}
+      </div>
+      
+      {/* Active Step */}
+      <div className="bg-blue-50 rounded-2xl p-5 border border-blue-100 text-center">
+        <div className="w-12 h-12 bg-blue-600 text-white rounded-2xl flex items-center justify-center font-bold text-xl mx-auto mb-3">
+          {steps[activeStep].num}
+        </div>
+        <h3 className="font-bold text-slate-900 mb-2">{steps[activeStep].title}</h3>
+        <p className="text-sm text-slate-600">{steps[activeStep].desc}</p>
+      </div>
+    </section>
+  );
+};
+
+const MobilePricing = () => (
+  <section className="py-8 px-4 bg-slate-50">
+    <h2 className="text-lg font-bold text-slate-900 mb-2 text-center">Pricing</h2>
+    <p className="text-sm text-slate-500 text-center mb-4">Transparent und fair</p>
+    
+    <div className="bg-white rounded-2xl p-5 border border-slate-100">
+      <div className="text-center mb-4">
+        <div className="text-3xl font-extrabold text-slate-900">0,08€</div>
+        <div className="text-sm text-slate-500">pro Dokument</div>
+      </div>
+      
+      <div className="space-y-2 mb-4">
+        {["Keine Grundgebühr", "Setup inklusive", "Support inklusive"].map((item, i) => (
+          <div key={i} className="flex items-center gap-2 text-sm">
+            <div className="w-5 h-5 rounded-full bg-emerald-100 text-emerald-600 flex items-center justify-center text-xs">✓</div>
+            <span className="text-slate-700">{item}</span>
+          </div>
+        ))}
+      </div>
+      
+      <button className="w-full bg-slate-900 text-white py-3 rounded-xl font-semibold active:scale-[0.98] transition-transform">
+        Demo anfragen
+      </button>
+    </div>
+  </section>
+);
+
+const MobileDemo = () => (
+  <section id="mobile-demo" className="py-8 px-4">
+    <h2 className="text-lg font-bold text-slate-900 mb-2 text-center">Live testen</h2>
+    <p className="text-sm text-slate-500 text-center mb-4">Laden Sie ein Dokument hoch</p>
+    
+    <div className="bg-slate-50 border-2 border-dashed border-slate-200 rounded-2xl p-8 text-center">
+      <div className="text-4xl mb-3">📄</div>
+      <p className="text-sm text-slate-500 mb-4">PDF, Bild oder Scan</p>
+      <button className="bg-blue-600 text-white px-6 py-2.5 rounded-xl font-semibold text-sm active:scale-95 transition-transform">
+        Datei auswählen
+      </button>
+    </div>
+  </section>
+);
+
+const MobileFAQ = () => {
+  const [openIndex, setOpenIndex] = useState<number | null>(null);
+  const faqs = [
+    { q: "Wie sicher sind meine Daten?", a: "Alle Daten werden verschlüsselt übertragen und nach der Verarbeitung gelöscht." },
+    { q: "Welche Formate werden unterstützt?", a: "PDF, JPG, PNG und alle gängigen Dokumentformate." },
+    { q: "Wie lange dauert die Einrichtung?", a: "Die Einrichtung erfolgt innerhalb von 24 Stunden." },
+  ];
+
+  return (
+    <section className="py-8 px-4 bg-slate-50">
+      <h2 className="text-lg font-bold text-slate-900 mb-4 text-center">FAQ</h2>
+      
+      <div className="space-y-2">
+        {faqs.map((faq, i) => (
+          <div key={i} className="bg-white rounded-xl overflow-hidden border border-slate-100">
+            <button
+              onClick={() => setOpenIndex(openIndex === i ? null : i)}
+              className="w-full px-4 py-3 text-left flex items-center justify-between"
+            >
+              <span className="font-semibold text-sm text-slate-900">{faq.q}</span>
+              <span className="text-slate-400">{openIndex === i ? '−' : '+'}</span>
+            </button>
+            {openIndex === i && (
+              <div className="px-4 pb-3 text-sm text-slate-500">{faq.a}</div>
+            )}
+          </div>
+        ))}
+      </div>
+    </section>
+  );
+};
+
+const MobileFooter = () => (
+  <footer className="py-6 px-4 bg-slate-900 text-center">
+    <div className="flex items-center justify-center gap-2 mb-3">
+      <div className="w-6 h-6 bg-white rounded-lg flex items-center justify-center text-slate-900 font-bold text-xs">C</div>
+      <span className="text-white font-semibold">Certina Visual AI</span>
+    </div>
+    <p className="text-slate-400 text-xs">© 2026 Certina. Alle Rechte vorbehalten.</p>
+  </footer>
+);
+
+// Mobile App Layout - komplett eigenständig
+const MobileApp = ({ onOpenContact }: { onOpenContact: () => void }) => (
+  <div className="min-h-screen bg-white">
+    <MobileNavbar onOpenContact={onOpenContact} />
+    <MobileHero />
+    <MobileFeatures />
+    <MobileWorkflow />
+    <MobileDemo />
+    <MobilePricing />
+    <MobileFAQ />
+    <MobileFooter />
+  </div>
+);
+
+// ============================================
+// MAIN APP - Rendert Desktop ODER Mobile
+// ============================================
+
 export default function App() {
   const [isContactModalOpen, setIsContactModalOpen] = useState(false);
+  const [isMobile, setIsMobile] = useState(false);
+
+  useEffect(() => {
+    // Check screen size
+    const checkMobile = () => setIsMobile(window.innerWidth < 768);
+    checkMobile();
+    window.addEventListener('resize', checkMobile);
+    return () => window.removeEventListener('resize', checkMobile);
+  }, []);
 
   useEffect(() => {
     const observer = new IntersectionObserver((entries) => {
@@ -1745,6 +2039,17 @@ export default function App() {
     return () => observer.disconnect();
   }, []);
 
+  // Mobile: Komplett separates Layout
+  if (isMobile) {
+    return (
+      <>
+        <MobileApp onOpenContact={() => setIsContactModalOpen(true)} />
+        <ContactModal isOpen={isContactModalOpen} onClose={() => setIsContactModalOpen(false)} />
+      </>
+    );
+  }
+
+  // Desktop: Original Layout (unverändert)
   return (
     <div className="min-h-screen">
       <Navbar onOpenContact={() => setIsContactModalOpen(true)} />
