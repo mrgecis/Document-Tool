@@ -1156,7 +1156,7 @@ const StepToStart = () => {
   "rechnungsnummer": "nur wenn es eine Rechnung ist",
   "betrag": "nur wenn es eine Rechnung ist, Format: 1234.56",
   "buchungsvorschlag": "nur wenn es eine Rechnung ist: Buchungssatz basierend auf SKR03 (z.B. 'Soll: 1400 Forderungen / Haben: 8400 Erlöse 19% USt + 1776 USt 19%')",
-  "suggestedName": "Dateiname im Format: YYYY-MM-DD_Dokumententyp_Absender_Details"
+  "suggestedName": "Dateiname im Format: YYYY-MM-DD_Dokumententyp_Absender_Spezifik (z.B. 2020-07-22_Mahnung_Power-GmbH_RG123456 oder 2024-01-15_Rechnung_Firma-XY_1500EUR). Verwende spezifische Details wie Rechnungsnummer, Betrag, Vertragsnummer etc. statt 'Details'. Keine Leerzeichen, nur Bindestriche und Unterstriche."
 }
 
 WICHTIG: 
