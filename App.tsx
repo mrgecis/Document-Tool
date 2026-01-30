@@ -1007,7 +1007,7 @@ const StepToStart = () => {
     datum: string;
     rechnungsnummer?: string;
     betrag?: string;
-    buchungsvorschlag?: string;
+    buchungsvorschlag?: Array<{ konto: string; beschreibung: string; betrag: string; sollHaben: 'Soll' | 'Haben' }>;
     suggestedName: string;
   } | null>(null);
   const [error, setError] = useState<string | null>(null);
@@ -1155,14 +1155,21 @@ const StepToStart = () => {
   "datum": "Datum im Format YYYY-MM-DD",
   "rechnungsnummer": "nur wenn es eine Rechnung ist",
   "betrag": "nur wenn es eine Rechnung ist, Format: 1234.56",
-  "buchungsvorschlag": "nur wenn es eine Rechnung ist: Buchungssatz basierend auf SKR03 (z.B. 'Soll: 1400 Forderungen / Haben: 8400 Erlöse 19% USt + 1776 USt 19%')",
+  "buchungsvorschlag": "nur wenn es eine Rechnung ist: Array mit Buchungszeilen basierend auf SKR03",
   "suggestedName": "Dateiname im Format: YYYY-MM-DD_Dokumententyp_Absender_Spezifik (z.B. 2020-07-22_Mahnung_Power-GmbH_RG123456 oder 2024-01-15_Rechnung_Firma-XY_1500EUR). Verwende spezifische Details wie Rechnungsnummer, Betrag, Vertragsnummer etc. statt 'Details'. Keine Leerzeichen, nur Bindestriche und Unterstriche."
 }
+
+Für buchungsvorschlag bei Rechnungen verwende dieses Format (Array von Objekten):
+[
+  {"konto": "1400", "beschreibung": "Forderungen a. Lieferungen", "betrag": "1234.56", "sollHaben": "Soll"},
+  {"konto": "8400", "beschreibung": "Erlöse 19% USt", "betrag": "1037.78", "sollHaben": "Haben"},
+  {"konto": "1776", "beschreibung": "Umsatzsteuer 19%", "betrag": "196.78", "sollHaben": "Haben"}
+]
 
 WICHTIG: 
 - dokumentKategorie muss EXAKT einer dieser Werte sein: Rechnungen, Steuerdokument, Buchhaltungsdokumente, Sonstige
 - rechnungsnummer, betrag und buchungsvorschlag NUR bei Rechnungen angeben, sonst weglassen
-- Für buchungsvorschlag verwende SKR03 Kontenrahmen: häufige Konten sind z.B. 1400 (Forderungen), 1600 (Verbindlichkeiten), 8400 (Erlöse 19%), 1776 (USt 19%), 1576 (Vorsteuer 19%), 4930 (Bürobedarf), 4910 (Porto), 4920 (Telekom), 4210 (Miete), etc.`
+- Für buchungsvorschlag: Berechne die einzelnen Beträge korrekt (Nettobetrag + USt = Bruttobetrag). Häufige SKR03 Konten: 1400 (Forderungen), 1600 (Verbindlichkeiten), 8400 (Erlöse 19%), 8300 (Erlöse 7%), 1776 (USt 19%), 1771 (USt 7%), 1576 (Vorsteuer 19%), 1571 (Vorsteuer 7%), 4930 (Bürobedarf), 4910 (Porto), 4920 (Telekom), 4210 (Miete), etc.`
                 },
                 {
                   type: 'image_url',
@@ -1522,22 +1529,48 @@ WICHTIG:
                            <h3 className="text-lg font-bold text-blue-900">Buchungsvorschlag (SKR03)</h3>
                          </div>
                          
-                         <div className="flex flex-wrap gap-3">
-                           {/* Betrag Tag */}
-                           <div className="inline-flex items-center gap-2 bg-white rounded-xl px-4 py-3 border border-blue-100 shadow-sm">
-                             <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" className="text-blue-600">
-                               <line x1="12" y1="1" x2="12" y2="23"/>
-                               <path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/>
-                             </svg>
-                             <span className="text-[11px] font-bold text-blue-500 uppercase tracking-wider">Betrag</span>
-                             <span className="text-slate-900 font-bold text-base">{analysisResult.betrag} €</span>
-                           </div>
+                         <div className="space-y-3">
+                           {/* Soll-Buchungen */}
+                           {analysisResult.buchungsvorschlag.filter(b => b.sollHaben === 'Soll').length > 0 && (
+                             <div>
+                               <div className="text-xs font-bold text-blue-600 uppercase tracking-wider mb-2 flex items-center gap-2">
+                                 <span className="w-2 h-2 bg-blue-500 rounded-full"></span>
+                                 Soll
+                               </div>
+                               <div className="flex flex-wrap gap-2">
+                                 {analysisResult.buchungsvorschlag.filter(b => b.sollHaben === 'Soll').map((buchung, idx) => (
+                                   <div key={idx} className="inline-flex items-center gap-3 bg-white rounded-xl px-4 py-3 border border-blue-100 shadow-sm">
+                                     <div className="flex flex-col">
+                                       <span className="text-[10px] font-bold text-blue-500 uppercase tracking-wider">Konto {buchung.konto}</span>
+                                       <span className="text-xs text-slate-600">{buchung.beschreibung}</span>
+                                     </div>
+                                     <div className="text-slate-900 font-bold text-lg">{buchung.betrag} €</div>
+                                   </div>
+                                 ))}
+                               </div>
+                             </div>
+                           )}
 
-                           {/* Buchungssatz Tag */}
-                           <div className="flex-1 min-w-[280px] bg-white rounded-xl px-4 py-3 border border-blue-100 shadow-sm">
-                             <div className="text-[11px] font-bold text-blue-500 uppercase tracking-wider mb-1.5">Buchungssatz</div>
-                             <div className="text-slate-900 font-semibold text-sm leading-relaxed">{analysisResult.buchungsvorschlag}</div>
-                           </div>
+                           {/* Haben-Buchungen */}
+                           {analysisResult.buchungsvorschlag.filter(b => b.sollHaben === 'Haben').length > 0 && (
+                             <div>
+                               <div className="text-xs font-bold text-indigo-600 uppercase tracking-wider mb-2 flex items-center gap-2">
+                                 <span className="w-2 h-2 bg-indigo-500 rounded-full"></span>
+                                 Haben
+                               </div>
+                               <div className="flex flex-wrap gap-2">
+                                 {analysisResult.buchungsvorschlag.filter(b => b.sollHaben === 'Haben').map((buchung, idx) => (
+                                   <div key={idx} className="inline-flex items-center gap-3 bg-white rounded-xl px-4 py-3 border border-indigo-100 shadow-sm">
+                                     <div className="flex flex-col">
+                                       <span className="text-[10px] font-bold text-indigo-500 uppercase tracking-wider">Konto {buchung.konto}</span>
+                                       <span className="text-xs text-slate-600">{buchung.beschreibung}</span>
+                                     </div>
+                                     <div className="text-slate-900 font-bold text-lg">{buchung.betrag} €</div>
+                                   </div>
+                                 ))}
+                               </div>
+                             </div>
+                           )}
                          </div>
                        </div>
                      )}
