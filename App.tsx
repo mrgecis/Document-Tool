@@ -31,7 +31,7 @@ const Button = ({ children, variant = 'primary', className = '', onClick }: { ch
 const SectionHeading = ({ title, subtitle, badge, centered = true }: { title: string, subtitle?: string, badge?: string, centered?: boolean }) => (
   <div className={`mb-16 ${centered ? 'text-center' : ''} reveal`}>
     {badge && <Badge className="mb-4">{badge}</Badge>}
-    <h2 className="text-4xl md:text-5xl font-extrabold text-slate-900 mb-6 tracking-tight leading-[1.1]">{title}</h2>
+    <h2 className="text-3xl md:text-5xl font-extrabold text-slate-900 mb-6 tracking-tight leading-[1.1]">{title}</h2>
     {subtitle && <p className="text-lg text-slate-500 max-w-4xl mx-auto leading-relaxed">{subtitle}</p>}
   </div>
 );
@@ -165,10 +165,10 @@ const Hero = () => (
 
 const ProblemSolution = () => (
   <section id="lösung" className="py-32 bg-slate-50">
-    <div className="container mx-auto px-8">
+    <div className="container mx-auto px-4 md:px-8">
       <div className="grid lg:grid-cols-2 gap-12 items-start">
         {/* Left: Problem */}
-        <div className="reveal p-10 pl-4 border border-transparent">
+        <div className="reveal p-6 md:p-10 pl-4 border border-transparent">
           <Badge className="mb-6 bg-slate-200 text-slate-600 border-slate-300">Herausforderung</Badge>
           <h3 className="text-4xl font-extrabold mb-6 tracking-tight text-slate-800 min-h-[80px] flex items-end pb-1">Warum klassisches OCR heute nicht mehr ausreicht.</h3>
           <p className="text-lg text-slate-500 mb-8 leading-relaxed font-medium min-h-[56px]">
@@ -221,8 +221,8 @@ const ProblemSolution = () => (
 
 const FeaturesGrid = () => (
   <section id="funktionen" className="py-32 bg-[#FBFBFC]">
-    <div className="container mx-auto px-8">
-      <SectionHeading 
+    <div className="container mx-auto px-4 md:px-8">
+      <SectionHeading  
         badge="Features"
         title="Out-of-the-Box produktiv." 
         subtitle="Unsere Lösung ist sofort einsatzbereit und deckt die wichtigsten geschäftlichen Anforderungen nativ ab." 
@@ -752,7 +752,7 @@ const PricingSection = () => {
             "url(\"data:image/svg+xml,%3Csvg viewBox='0 0 300 300' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.5'/%3E%3C/svg%3E\")"
         }}
       ></div>
-      <div className="container mx-auto px-8 relative z-10">
+      <div className="container mx-auto px-4 md:px-8 relative z-10">
         <div className="mb-16 text-center reveal">
           <Badge className="mb-4 bg-indigo-500/10 border-indigo-500/20 text-indigo-400">Preismodell</Badge>
           <h2 className="text-4xl md:text-5xl font-extrabold text-white mb-6 tracking-tight leading-[1.1]">Wir verdienen nur, wenn Sie sparen.</h2>
@@ -763,7 +763,7 @@ const PricingSection = () => {
           {/* Left Content */}
           <div className="reveal flex flex-col items-start py-0">
             <div className="mb-12">
-              <div className="text-[100px] leading-none font-black mb-8 text-white tracking-tighter">
+              <div className="text-6xl md:text-[100px] leading-none font-black mb-8 text-white tracking-tighter">
                 20%
               </div>
               <h4 className="text-3xl font-bold mb-6 text-white tracking-tight leading-snug">
@@ -792,7 +792,7 @@ const PricingSection = () => {
           </div>
           
           {/* Right: ROI Dashboard */}
-          <div className="bg-white/5 backdrop-blur-xl p-10 md:p-12 rounded-[32px] reveal relative border border-white/10 shadow-2xl">
+          <div className="bg-white/5 backdrop-blur-xl p-6 md:p-12 rounded-[32px] reveal relative border border-white/10 shadow-2xl">
             <div className="flex items-center justify-between mb-12">
               <h4 className="text-xl font-extrabold text-white tracking-tight">ROI-Dashboard</h4>
               <div className="px-3 py-1 bg-white/10 border border-white/20 rounded-full text-[10px] font-bold tracking-wider uppercase text-slate-300">Live Kalkulator</div>
@@ -941,8 +941,8 @@ const PricingSection = () => {
 
 const DeploymentSection = () => (
   <section id="betrieb" className="pt-32 pb-20 bg-[#FBFBFC]">
-    <div className="container mx-auto px-8">
-      <SectionHeading 
+    <div className="container mx-auto px-4 md:px-8">
+      <SectionHeading  
         badge="Infrastruktur"
         title="Betrieb nach Ihren Regeln." 
         subtitle="Cloud oder vollständig lokal – Sie entscheiden."
@@ -950,10 +950,10 @@ const DeploymentSection = () => (
       
       <div className="grid md:grid-cols-2 gap-8 max-w-5xl mx-auto">
         {/* Cloud Native Card */}
-        <div className="group relative h-[480px] rounded-[40px] overflow-hidden bg-white shadow-[0_4px_24px_rgba(0,0,0,0.04)] transition-all duration-700 hover:shadow-[0_4px_48px_rgba(0,0,0,0.08)] reveal">
+        <div className="group relative min-h-[480px] md:h-[480px] rounded-[40px] overflow-hidden bg-white shadow-[0_4px_24px_rgba(0,0,0,0.04)] transition-all duration-700 hover:shadow-[0_4px_48px_rgba(0,0,0,0.08)] reveal">
           <div className="absolute inset-0 bg-gradient-to-b from-blue-50/50 to-transparent"></div>
           
-          <div className="relative p-10 h-full flex flex-col">
+          <div className="relative p-6 md:p-10 h-full flex flex-col">
             <div className="mb-6">
               <span className="text-[13px] font-bold text-slate-500 uppercase tracking-widest block mb-2">Flexibilität</span>
               <h4 className="text-3xl font-black text-slate-900 leading-tight tracking-tight">Cloud-Lösung</h4>
@@ -992,10 +992,10 @@ const DeploymentSection = () => (
         </div>
         
         {/* On-Prem Card */}
-        <div className="group relative h-[480px] rounded-[40px] overflow-hidden bg-[#0A0B10] shadow-2xl transition-all duration-700 reveal">
+        <div className="group relative min-h-[480px] md:h-[480px] rounded-[40px] overflow-hidden bg-[#0A0B10] shadow-2xl transition-all duration-700 reveal">
           <div className="absolute inset-0 bg-gradient-to-br from-white/5 to-transparent"></div>
           
-          <div className="relative p-10 h-full flex flex-col">
+          <div className="relative p-6 md:p-10 h-full flex flex-col">
             <div className="mb-6">
               <span className="text-[13px] font-bold text-slate-500 uppercase tracking-widest block mb-2">Souveränität</span>
               <h4 className="text-3xl font-black text-white leading-tight tracking-tight">On-Prem-Lösung</h4>
@@ -1264,8 +1264,8 @@ WICHTIG:
 
   return (
   <section id="start" className="py-32 bg-[#FBFBFC] relative overflow-hidden">
-    <div className="container mx-auto px-8 relative z-10">
-      <SectionHeading 
+    <div className="container mx-auto px-4 md:px-8 relative z-10">
+      <SectionHeading  
         badge="Starten"
         title="Ready to transform?" 
         subtitle="In drei Schritten zum messbaren Automatisierungserfolg."
@@ -1316,7 +1316,7 @@ WICHTIG:
       
       {/* Live Test Box */}
       <div id="live-test" className="scroll-mt-32 max-w-4xl mx-auto bg-white rounded-[40px] p-2 border border-slate-100 shadow-[0_24px_64px_-12px_rgba(0,0,0,0.06)] reveal">
-         <div className="rounded-[32px] bg-slate-50/50 border border-slate-100 p-8 md:p-12 relative overflow-hidden">
+         <div className="rounded-[32px] bg-slate-50/50 border border-slate-100 p-6 md:p-12 relative overflow-hidden">
              
              {/* Header */}
              <div className="text-center mb-8">
@@ -1658,20 +1658,20 @@ const FAQAccordion = () => {
   const [openIndex, setOpenIndex] = useState<number | null>(null);
   return (
     <section id="faq" className="py-32 bg-white">
-      <div className="container mx-auto px-8 max-w-3xl">
+      <div className="container mx-auto px-4 md:px-8 max-w-3xl">
         <SectionHeading badge="Support" title="Häufig gefragt." />
         <div className="space-y-4">
           {FAQS.map((faq, i) => (
             <div key={i} className="reveal">
               <button 
                 onClick={() => setOpenIndex(openIndex === i ? null : i)}
-                className={`w-full text-left p-8 font-bold text-[17px] flex justify-between items-center transition-all duration-300 rounded-[24px] ${openIndex === i ? 'bg-slate-900 text-white' : 'bg-slate-50 text-slate-900 hover:bg-slate-100'}`}
+                className={`w-full text-left p-6 md:p-8 font-bold text-[17px] flex justify-between items-center transition-all duration-300 rounded-[24px] ${openIndex === i ? 'bg-slate-900 text-white' : 'bg-slate-50 text-slate-900 hover:bg-slate-100'}`}
               >
                 {faq.question}
                 <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" className={`transition-transform duration-500 ${openIndex === i ? 'rotate-180 text-white' : 'text-slate-300'}`}><polyline points="6 9 12 15 18 9"/></svg>
               </button>
               {openIndex === i && (
-                <div className="p-8 text-slate-500 leading-relaxed text-base animate-in fade-in slide-in-from-top-4 duration-500">
+                <div className="p-6 md:p-8 text-slate-500 leading-relaxed text-base animate-in fade-in slide-in-from-top-4 duration-500">
                   {faq.answer}
                 </div>
               )}
@@ -1778,253 +1778,8 @@ const ContactModal = ({ isOpen, onClose }: { isOpen: boolean; onClose: () => voi
   );
 };
 
-// ============================================
-// MOBILE WEB APP - Komplett separates Layout
-// ============================================
-
-const MobileNavbar = ({ onOpenContact }: { onOpenContact: () => void }) => (
-  <nav className="fixed top-0 left-0 right-0 z-50 bg-white/95 backdrop-blur-lg border-b border-slate-100 px-4 py-3">
-    <div className="flex items-center justify-between">
-      <div className="flex items-center gap-2">
-        <div className="w-8 h-8 bg-slate-900 rounded-xl flex items-center justify-center text-white font-bold">C</div>
-        <span className="font-bold text-slate-900">Certina</span>
-      </div>
-      <button 
-        onClick={onOpenContact}
-        className="bg-slate-900 text-white px-4 py-2 rounded-xl text-sm font-semibold active:scale-95 transition-transform"
-      >
-        Demo
-      </button>
-    </div>
-  </nav>
-);
-
-const MobileHero = () => (
-  <section className="pt-20 pb-8 px-4">
-    <div className="text-center">
-      <div className="inline-block bg-indigo-50 text-indigo-700 text-[10px] font-bold uppercase tracking-wider px-3 py-1.5 rounded-full mb-4">
-        Visual AI
-      </div>
-      <h1 className="text-2xl font-extrabold text-slate-900 leading-tight mb-3">
-        Intelligente Dokumenten-<br/>verarbeitung
-      </h1>
-      <p className="text-sm text-slate-500 mb-6 leading-relaxed">
-        Von Eingang bis Ablage – automatisch verstehen, extrahieren und strukturieren.
-      </p>
-      <div className="flex flex-col gap-3">
-        <button 
-          onClick={() => document.getElementById('mobile-demo')?.scrollIntoView({ behavior: 'smooth' })}
-          className="w-full bg-slate-900 text-white py-3.5 rounded-2xl font-semibold active:scale-[0.98] transition-transform"
-        >
-          Jetzt testen
-        </button>
-        <button 
-          onClick={() => document.getElementById('mobile-workflow')?.scrollIntoView({ behavior: 'smooth' })}
-          className="w-full bg-slate-100 text-slate-700 py-3.5 rounded-2xl font-semibold active:scale-[0.98] transition-transform"
-        >
-          Wie es funktioniert
-        </button>
-      </div>
-    </div>
-  </section>
-);
-
-const MobileFeatures = () => {
-  const [activeFeature, setActiveFeature] = useState(0);
-  const features = [
-    { icon: "📄", title: "Extraktion", desc: "Automatische Datenerfassung aus jedem Dokumenttyp" },
-    { icon: "✓", title: "Validierung", desc: "Prüfung gegen Stammdaten in Echtzeit" },
-    { icon: "📁", title: "Benennung", desc: "Intelligente Dateibenennung nach Schema" },
-    { icon: "🗂️", title: "Ablage", desc: "Strukturierte Speicherung im Zielsystem" },
-  ];
-
-  return (
-    <section className="py-8 px-4 bg-slate-50">
-      <h2 className="text-lg font-bold text-slate-900 mb-4 text-center">Features</h2>
-      
-      {/* Tab-Navigation */}
-      <div className="flex gap-2 overflow-x-auto hide-scrollbar pb-3 -mx-4 px-4">
-        {features.map((f, i) => (
-          <button
-            key={i}
-            onClick={() => setActiveFeature(i)}
-            className={`flex-shrink-0 px-4 py-2 rounded-full text-sm font-semibold whitespace-nowrap transition-all active:scale-95 ${
-              activeFeature === i 
-                ? 'bg-slate-900 text-white' 
-                : 'bg-white text-slate-600 border border-slate-200'
-            }`}
-          >
-            {f.icon} {f.title}
-          </button>
-        ))}
-      </div>
-      
-      {/* Active Feature Card */}
-      <div className="bg-white rounded-2xl p-5 border border-slate-100 shadow-sm">
-        <div className="text-3xl mb-3">{features[activeFeature].icon}</div>
-        <h3 className="font-bold text-slate-900 mb-2">{features[activeFeature].title}</h3>
-        <p className="text-sm text-slate-500 leading-relaxed">{features[activeFeature].desc}</p>
-      </div>
-    </section>
-  );
-};
-
-const MobileWorkflow = () => {
-  const [activeStep, setActiveStep] = useState(0);
-  const steps = [
-    { num: 1, title: "Upload", desc: "Dokument hochladen oder fotografieren" },
-    { num: 2, title: "Analyse", desc: "Visual AI erkennt Typ und Inhalt" },
-    { num: 3, title: "Extraktion", desc: "Relevante Daten werden extrahiert" },
-    { num: 4, title: "Validierung", desc: "Automatische Prüfung der Daten" },
-    { num: 5, title: "Ablage", desc: "Strukturierte Speicherung" },
-  ];
-
-  return (
-    <section id="mobile-workflow" className="py-8 px-4">
-      <h2 className="text-lg font-bold text-slate-900 mb-4 text-center">So funktioniert's</h2>
-      
-      {/* Step Indicators */}
-      <div className="flex justify-center gap-2 mb-6">
-        {steps.map((_, i) => (
-          <button
-            key={i}
-            onClick={() => setActiveStep(i)}
-            className={`w-8 h-8 rounded-full font-bold text-sm transition-all active:scale-90 ${
-              activeStep === i 
-                ? 'bg-blue-600 text-white' 
-                : 'bg-slate-100 text-slate-400'
-            }`}
-          >
-            {i + 1}
-          </button>
-        ))}
-      </div>
-      
-      {/* Active Step */}
-      <div className="bg-blue-50 rounded-2xl p-5 border border-blue-100 text-center">
-        <div className="w-12 h-12 bg-blue-600 text-white rounded-2xl flex items-center justify-center font-bold text-xl mx-auto mb-3">
-          {steps[activeStep].num}
-        </div>
-        <h3 className="font-bold text-slate-900 mb-2">{steps[activeStep].title}</h3>
-        <p className="text-sm text-slate-600">{steps[activeStep].desc}</p>
-      </div>
-    </section>
-  );
-};
-
-const MobilePricing = () => (
-  <section className="py-8 px-4 bg-slate-50">
-    <h2 className="text-lg font-bold text-slate-900 mb-2 text-center">Pricing</h2>
-    <p className="text-sm text-slate-500 text-center mb-4">Transparent und fair</p>
-    
-    <div className="bg-white rounded-2xl p-5 border border-slate-100">
-      <div className="text-center mb-4">
-        <div className="text-3xl font-extrabold text-slate-900">0,08€</div>
-        <div className="text-sm text-slate-500">pro Dokument</div>
-      </div>
-      
-      <div className="space-y-2 mb-4">
-        {["Keine Grundgebühr", "Setup inklusive", "Support inklusive"].map((item, i) => (
-          <div key={i} className="flex items-center gap-2 text-sm">
-            <div className="w-5 h-5 rounded-full bg-emerald-100 text-emerald-600 flex items-center justify-center text-xs">✓</div>
-            <span className="text-slate-700">{item}</span>
-          </div>
-        ))}
-      </div>
-      
-      <button className="w-full bg-slate-900 text-white py-3 rounded-xl font-semibold active:scale-[0.98] transition-transform">
-        Demo anfragen
-      </button>
-    </div>
-  </section>
-);
-
-const MobileDemo = () => (
-  <section id="mobile-demo" className="py-8 px-4">
-    <h2 className="text-lg font-bold text-slate-900 mb-2 text-center">Live testen</h2>
-    <p className="text-sm text-slate-500 text-center mb-4">Laden Sie ein Dokument hoch</p>
-    
-    <div className="bg-slate-50 border-2 border-dashed border-slate-200 rounded-2xl p-8 text-center">
-      <div className="text-4xl mb-3">📄</div>
-      <p className="text-sm text-slate-500 mb-4">PDF, Bild oder Scan</p>
-      <button className="bg-blue-600 text-white px-6 py-2.5 rounded-xl font-semibold text-sm active:scale-95 transition-transform">
-        Datei auswählen
-      </button>
-    </div>
-  </section>
-);
-
-const MobileFAQ = () => {
-  const [openIndex, setOpenIndex] = useState<number | null>(null);
-  const faqs = [
-    { q: "Wie sicher sind meine Daten?", a: "Alle Daten werden verschlüsselt übertragen und nach der Verarbeitung gelöscht." },
-    { q: "Welche Formate werden unterstützt?", a: "PDF, JPG, PNG und alle gängigen Dokumentformate." },
-    { q: "Wie lange dauert die Einrichtung?", a: "Die Einrichtung erfolgt innerhalb von 24 Stunden." },
-  ];
-
-  return (
-    <section className="py-8 px-4 bg-slate-50">
-      <h2 className="text-lg font-bold text-slate-900 mb-4 text-center">FAQ</h2>
-      
-      <div className="space-y-2">
-        {faqs.map((faq, i) => (
-          <div key={i} className="bg-white rounded-xl overflow-hidden border border-slate-100">
-            <button
-              onClick={() => setOpenIndex(openIndex === i ? null : i)}
-              className="w-full px-4 py-3 text-left flex items-center justify-between"
-            >
-              <span className="font-semibold text-sm text-slate-900">{faq.q}</span>
-              <span className="text-slate-400">{openIndex === i ? '−' : '+'}</span>
-            </button>
-            {openIndex === i && (
-              <div className="px-4 pb-3 text-sm text-slate-500">{faq.a}</div>
-            )}
-          </div>
-        ))}
-      </div>
-    </section>
-  );
-};
-
-const MobileFooter = () => (
-  <footer className="py-6 px-4 bg-slate-900 text-center">
-    <div className="flex items-center justify-center gap-2 mb-3">
-      <div className="w-6 h-6 bg-white rounded-lg flex items-center justify-center text-slate-900 font-bold text-xs">C</div>
-      <span className="text-white font-semibold">Certina Visual AI</span>
-    </div>
-    <p className="text-slate-400 text-xs">© 2026 Certina. Alle Rechte vorbehalten.</p>
-  </footer>
-);
-
-// Mobile App Layout - komplett eigenständig
-const MobileApp = ({ onOpenContact }: { onOpenContact: () => void }) => (
-  <div className="min-h-screen bg-white">
-    <MobileNavbar onOpenContact={onOpenContact} />
-    <MobileHero />
-    <MobileFeatures />
-    <MobileWorkflow />
-    <MobileDemo />
-    <MobilePricing />
-    <MobileFAQ />
-    <MobileFooter />
-  </div>
-);
-
-// ============================================
-// MAIN APP - Rendert Desktop ODER Mobile
-// ============================================
-
 export default function App() {
   const [isContactModalOpen, setIsContactModalOpen] = useState(false);
-  const [isMobile, setIsMobile] = useState(false);
-
-  useEffect(() => {
-    // Check screen size
-    const checkMobile = () => setIsMobile(window.innerWidth < 768);
-    checkMobile();
-    window.addEventListener('resize', checkMobile);
-    return () => window.removeEventListener('resize', checkMobile);
-  }, []);
 
   useEffect(() => {
     const observer = new IntersectionObserver((entries) => {
@@ -2039,17 +1794,6 @@ export default function App() {
     return () => observer.disconnect();
   }, []);
 
-  // Mobile: Komplett separates Layout
-  if (isMobile) {
-    return (
-      <>
-        <MobileApp onOpenContact={() => setIsContactModalOpen(true)} />
-        <ContactModal isOpen={isContactModalOpen} onClose={() => setIsContactModalOpen(false)} />
-      </>
-    );
-  }
-
-  // Desktop: Original Layout (unverändert)
   return (
     <div className="min-h-screen">
       <Navbar onOpenContact={() => setIsContactModalOpen(true)} />
