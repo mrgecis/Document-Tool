@@ -28,7 +28,13 @@
         }
         ::selection {
             background: rgba(79, 70, 229, 0.1);
-            color: #4f46e5;
+        }
+        .hide-scrollbar {
+            -ms-overflow-style: none;
+            scrollbar-width: none;
+        }
+        .hide-scrollbar::-webkit-scrollbar {
+            display: none;
         }
     </style>
 <script type="importmap">
