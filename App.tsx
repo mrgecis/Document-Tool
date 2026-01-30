@@ -47,11 +47,11 @@ const Navbar = ({ onOpenContact }: { onOpenContact: () => void }) => {
   }, []);
 
   return (
-    <nav className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ${scrolled ? 'glass py-4 border-b border-slate-100' : 'bg-transparent py-6'}`}>
-      <div className="container mx-auto px-8 flex items-center justify-between">
-        <div className="flex items-center gap-2.5 group cursor-pointer">
-          <div className="w-9 h-9 bg-slate-900 rounded-xl flex items-center justify-center text-white font-bold text-xl group-hover:bg-indigo-600 transition-colors">C</div>
-          <span className="text-lg font-bold tracking-tight text-slate-900">Certina Visual AI</span>
+    <nav className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ${scrolled ? 'glass py-3 md:py-4 border-b border-slate-100' : 'bg-transparent py-3 md:py-6'}`}>
+      <div className="container mx-auto px-4 md:px-8 flex items-center justify-between gap-2">
+        <div className="flex items-center gap-1.5 md:gap-2.5 group cursor-pointer">
+          <div className="w-8 md:w-9 h-8 md:h-9 bg-slate-900 rounded-xl flex items-center justify-center text-white font-bold text-lg md:text-xl group-hover:bg-indigo-600 transition-colors shrink-0">C</div>
+          <span className="text-sm md:text-lg font-bold tracking-tight text-slate-900 whitespace-nowrap">Certina Visual AI</span>
         </div>
         <div className="hidden lg:flex items-center gap-10 text-[14px] font-semibold text-slate-500">
             <a href="#start" className="hover:text-indigo-600 transition-colors">Testen</a>
@@ -60,9 +60,7 @@ const Navbar = ({ onOpenContact }: { onOpenContact: () => void }) => {
             <a href="#lösung" className="hover:text-indigo-600 transition-colors">Visual AI</a>
             <a href="#pricing" className="hover:text-indigo-600 transition-colors">Pricing</a>
         </div>
-        <div className="flex items-center gap-4">
-          <Button variant="primary" className="text-sm py-2.5 px-6 rounded-xl" onClick={onOpenContact}>Demo anfragen</Button>
-        </div>
+        <Button variant="primary" className="text-xs md:text-sm py-2 md:py-2.5 px-4 md:px-6 rounded-lg md:rounded-xl whitespace-nowrap" onClick={onOpenContact}>Demo anfragen</Button>
       </div>
     </nav>
   );
@@ -71,13 +69,13 @@ const Navbar = ({ onOpenContact }: { onOpenContact: () => void }) => {
 const Hero = () => (
   <section className="relative pt-20 md:pt-44 pb-16 md:pb-32 overflow-hidden hero-glow">
     <div className="container mx-auto px-4 md:px-8">
-      <div className="max-w-4xl mx-auto text-center mb-12 md:mb-20 reveal">
-        <Badge className="mb-4 md:mb-6 bg-indigo-50/50 text-indigo-700 border-indigo-100 uppercase tracking-wider text-xs md:text-sm">Die Evolution der Dokumentenverarbeitung</Badge>
-        <h1 className="text-3xl md:text-6xl lg:text-7xl font-extrabold text-slate-900 leading-[1.1] md:leading-[1.05] tracking-tight mb-4 md:mb-8">
-          The intelligence for <br/><span className="text-slate-400">business documents.</span>
+      <div className="max-w-4xl mx-auto text-center mb-8 md:mb-12 lg:mb-20 reveal">
+        <Badge className="mb-3 md:mb-4 lg:mb-6 bg-indigo-50/50 text-indigo-700 border-indigo-100 uppercase tracking-wider text-[10px] md:text-xs lg:text-sm px-3 py-1.5 md:px-4 md:py-2 inline-block">Die Evolution der Dokumentenverarbeitung</Badge>
+        <h1 className="text-3xl md:text-5xl lg:text-7xl font-extrabold text-slate-900 leading-[1.1] md:leading-[1.05] tracking-tight mb-4 md:mb-6 lg:mb-8">
+          The intelligence for <br className="block md:inline"/><span className="text-slate-400">business documents.</span>
         </h1>
-        <p className="text-sm md:text-lg lg:text-xl text-slate-500 mb-8 md:mb-12 max-w-2xl mx-auto leading-relaxed">
-          <span className="block text-slate-900 font-semibold mb-2 md:mb-3">Von Eingang bis Ablage</span>
+        <p className="text-xs sm:text-sm md:text-lg lg:text-xl text-slate-500 mb-6 md:mb-8 lg:mb-12 max-w-2xl mx-auto leading-relaxed px-2">
+          <span className="block text-slate-900 font-semibold mb-1.5 md:mb-2 lg:mb-3">Von Eingang bis Ablage</span>
           Visuelle AI versteht Dokumente, extrahiert relevante Informationen, <br className="hidden md:block"/>
           benennt sie automatisch und legt sie strukturiert ab.
         </p>
