@@ -1291,7 +1291,7 @@ WICHTIG:
                onDragLeave={handleDragLeave}
                onDrop={handleDrop}
                onClick={() => !isAnalyzing && !analysisResult && fileInputRef.current?.click()}
-               className={`relative border-2 border-dashed rounded-3xl p-8 md:p-12 text-center transition-all duration-300 cursor-pointer mb-6 ${
+               className={`relative border-2 border-dashed rounded-3xl p-6 md:p-12 text-center transition-all duration-300 cursor-pointer mb-6 ${
                  isDragging 
                    ? 'border-blue-500 bg-blue-50/50 scale-[1.02]' 
                    : isAnalyzing
@@ -1311,21 +1311,21 @@ WICHTIG:
 
                {isAnalyzing ? (
                  /* Analyzing State */
-                 <div className="py-8">
-                   <div className="relative w-20 h-20 mx-auto mb-6">
+                 <div className="py-6 md:py-8">
+                   <div className="relative w-16 md:w-20 h-16 md:h-20 mx-auto mb-4 md:mb-6">
                      {/* Outer spinning ring */}
                      <div className="absolute inset-0 border-4 border-blue-100 rounded-full"></div>
                      <div className="absolute inset-0 border-4 border-transparent border-t-blue-600 rounded-full animate-spin"></div>
                      {/* Inner icon */}
                      <div className="absolute inset-2 bg-white rounded-full flex items-center justify-center shadow-lg">
-                       <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" className="text-blue-600">
+                       <svg width="20" height="20" md:w-28 md:h-28 viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" className="text-blue-600">
                          <path d="M2 12s3-7 10-7 10 7 10 7-3 7-10 7-10-7-10-7Z"/>
                          <circle cx="12" cy="12" r="3"/>
                        </svg>
                      </div>
                    </div>
-                   <div className="text-lg font-bold text-slate-900 mb-2">Visual AI analysiert...</div>
-                   <div className="text-sm text-slate-500">{file?.name}</div>
+                   <div className="text-base md:text-lg font-bold text-slate-900 mb-2">Visual AI analysiert...</div>
+                   <div className="text-xs md:text-sm text-slate-500 break-words">{file?.name}</div>
                    <div className="flex justify-center gap-1 mt-4">
                      {[0, 1, 2].map(i => (
                        <div key={i} className="w-2 h-2 bg-blue-500 rounded-full animate-bounce" style={{ animationDelay: `${i * 0.15}s` }}></div>
@@ -1334,9 +1334,9 @@ WICHTIG:
                  </div>
                ) : analysisResult ? (
                  /* Success State - File Info */
-                 <div className="py-4">
-                   <div className="w-16 h-16 mx-auto mb-4 bg-emerald-100 rounded-2xl flex items-center justify-center">
-                     <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" className="text-emerald-600">
+                 <div className="py-3 md:py-4">
+                   <div className="w-12 md:w-16 h-12 md:h-16 mx-auto mb-3 md:mb-4 bg-emerald-100 rounded-2xl flex items-center justify-center">
+                     <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" className="text-emerald-600 md:w-8 md:h-8">
                        <polyline points="20 6 9 17 4 12"/>
                      </svg>
                    </div>
@@ -1391,7 +1391,7 @@ WICHTIG:
                <div className="space-y-4 animate-in slide-in-from-bottom-4 fade-in duration-500">
                  
                  {/* Basis-Informationen Grid */}
-                 <div className="grid gap-4 sm:grid-cols-2">
+                 <div className="grid gap-4 grid-cols-1 sm:grid-cols-2">
                    
                    {/* Absender */}
                    <div className="bg-white rounded-2xl p-6 border border-slate-100 shadow-sm">
@@ -1499,7 +1499,7 @@ WICHTIG:
                          <h3 className="text-lg font-bold text-emerald-900">Rechnungsinformationen</h3>
                        </div>
                        
-                       <div className="grid gap-4 sm:grid-cols-2">
+                       <div className="grid gap-4 grid-cols-1 sm:grid-cols-2">
                          {/* Rechnungsnummer */}
                          <div className="bg-white rounded-xl p-4 border border-emerald-100">
                            <div className="text-[10px] font-bold text-emerald-600 uppercase tracking-wider mb-1">Rechnungsnummer</div>
@@ -1537,14 +1537,14 @@ WICHTIG:
                                  <span className="w-2 h-2 bg-blue-500 rounded-full"></span>
                                  Soll
                                </div>
-                               <div className="flex flex-wrap gap-2">
+                               <div className="flex flex-col sm:flex-wrap gap-2 sm:gap-2">
                                  {analysisResult.buchungsvorschlag.filter(b => b.sollHaben === 'Soll').map((buchung, idx) => (
-                                   <div key={idx} className="inline-flex items-center gap-3 bg-white rounded-xl px-4 py-3 border border-blue-100 shadow-sm">
-                                     <div className="flex flex-col">
+                                   <div key={idx} className="flex sm:inline-flex items-center gap-3 bg-white rounded-xl px-4 py-3 border border-blue-100 shadow-sm w-full sm:w-auto">
+                                     <div className="flex flex-col flex-1 sm:flex-initial">
                                        <span className="text-[10px] font-bold text-blue-500 uppercase tracking-wider">Konto {buchung.konto}</span>
                                        <span className="text-xs text-slate-600">{buchung.beschreibung}</span>
                                      </div>
-                                     <div className="text-slate-900 font-bold text-lg">{buchung.betrag} €</div>
+                                     <div className="text-slate-900 font-bold text-lg whitespace-nowrap">{buchung.betrag} €</div>
                                    </div>
                                  ))}
                                </div>
@@ -1558,14 +1558,14 @@ WICHTIG:
                                  <span className="w-2 h-2 bg-indigo-500 rounded-full"></span>
                                  Haben
                                </div>
-                               <div className="flex flex-wrap gap-2">
+                               <div className="flex flex-col sm:flex-wrap gap-2 sm:gap-2">
                                  {analysisResult.buchungsvorschlag.filter(b => b.sollHaben === 'Haben').map((buchung, idx) => (
-                                   <div key={idx} className="inline-flex items-center gap-3 bg-white rounded-xl px-4 py-3 border border-indigo-100 shadow-sm">
-                                     <div className="flex flex-col">
+                                   <div key={idx} className="flex sm:inline-flex items-center gap-3 bg-white rounded-xl px-4 py-3 border border-indigo-100 shadow-sm w-full sm:w-auto">
+                                     <div className="flex flex-col flex-1 sm:flex-initial">
                                        <span className="text-[10px] font-bold text-indigo-500 uppercase tracking-wider">Konto {buchung.konto}</span>
                                        <span className="text-xs text-slate-600">{buchung.beschreibung}</span>
                                      </div>
-                                     <div className="text-slate-900 font-bold text-lg">{buchung.betrag} €</div>
+                                     <div className="text-slate-900 font-bold text-lg whitespace-nowrap">{buchung.betrag} €</div>
                                    </div>
                                  ))}
                                </div>
