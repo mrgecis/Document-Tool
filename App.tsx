@@ -1480,37 +1480,68 @@ WICHTIG:
 
                  {/* Rechnungsspezifische Informationen - nur bei Rechnungen */}
                  {analysisResult.rechnungsnummer && (
-                   <div className="bg-gradient-to-br from-emerald-50 to-teal-50 rounded-2xl p-6 border-2 border-emerald-200 shadow-sm">
-                     <div className="flex items-center gap-3 mb-4">
-                       <div className="w-10 h-10 bg-emerald-500 rounded-xl flex items-center justify-center shrink-0">
-                         <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" className="text-white">
-                           <rect x="1" y="4" width="22" height="16" rx="2" ry="2"/>
-                           <line x1="1" y1="10" x2="23" y2="10"/>
-                         </svg>
+                   <>
+                     <div className="bg-gradient-to-br from-emerald-50 to-teal-50 rounded-2xl p-6 border-2 border-emerald-200 shadow-sm">
+                       <div className="flex items-center gap-3 mb-4">
+                         <div className="w-10 h-10 bg-emerald-500 rounded-xl flex items-center justify-center shrink-0">
+                           <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" className="text-white">
+                             <rect x="1" y="4" width="22" height="16" rx="2" ry="2"/>
+                             <line x1="1" y1="10" x2="23" y2="10"/>
+                           </svg>
+                         </div>
+                         <h3 className="text-lg font-bold text-emerald-900">Rechnungsinformationen</h3>
                        </div>
-                       <h3 className="text-lg font-bold text-emerald-900">Rechnungsinformationen</h3>
-                     </div>
-                     
-                     <div className="grid gap-4 sm:grid-cols-3">
-                       {/* Rechnungsnummer */}
-                       <div className="bg-white rounded-xl p-4 border border-emerald-100">
-                         <div className="text-[10px] font-bold text-emerald-600 uppercase tracking-wider mb-1">Rechnungsnummer</div>
-                         <div className="text-slate-900 font-bold text-lg">{analysisResult.rechnungsnummer}</div>
-                       </div>
+                       
+                       <div className="grid gap-4 sm:grid-cols-2">
+                         {/* Rechnungsnummer */}
+                         <div className="bg-white rounded-xl p-4 border border-emerald-100">
+                           <div className="text-[10px] font-bold text-emerald-600 uppercase tracking-wider mb-1">Rechnungsnummer</div>
+                           <div className="text-slate-900 font-bold text-lg">{analysisResult.rechnungsnummer}</div>
+                         </div>
 
-                       {/* Betrag */}
-                       <div className="bg-white rounded-xl p-4 border border-emerald-100">
-                         <div className="text-[10px] font-bold text-emerald-600 uppercase tracking-wider mb-1">Betrag</div>
-                         <div className="text-slate-900 font-bold text-lg">{analysisResult.betrag} €</div>
-                       </div>
-
-                       {/* Buchungsvorschlag */}
-                       <div className="bg-white rounded-xl p-4 border border-emerald-100 sm:col-span-1">
-                         <div className="text-[10px] font-bold text-emerald-600 uppercase tracking-wider mb-1">Buchungsvorschlag (SKR03)</div>
-                         <div className="text-slate-900 font-semibold text-sm leading-relaxed">{analysisResult.buchungsvorschlag}</div>
+                         {/* Betrag */}
+                         <div className="bg-white rounded-xl p-4 border border-emerald-100">
+                           <div className="text-[10px] font-bold text-emerald-600 uppercase tracking-wider mb-1">Betrag</div>
+                           <div className="text-slate-900 font-bold text-lg">{analysisResult.betrag} €</div>
+                         </div>
                        </div>
                      </div>
-                   </div>
+
+                     {/* Buchungsvorschlag - Separate Box */}
+                     {analysisResult.buchungsvorschlag && (
+                       <div className="bg-gradient-to-br from-blue-50 to-indigo-50 rounded-2xl p-6 border-2 border-blue-200 shadow-sm">
+                         <div className="flex items-center gap-3 mb-4">
+                           <div className="w-10 h-10 bg-blue-500 rounded-xl flex items-center justify-center shrink-0">
+                             <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" className="text-white">
+                               <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>
+                               <path d="M14 2v6h6"/>
+                               <line x1="12" y1="18" x2="12" y2="12"/>
+                               <line x1="9" y1="15" x2="15" y2="15"/>
+                             </svg>
+                           </div>
+                           <h3 className="text-lg font-bold text-blue-900">Buchungsvorschlag (SKR03)</h3>
+                         </div>
+                         
+                         <div className="flex flex-wrap gap-3">
+                           {/* Betrag Tag */}
+                           <div className="inline-flex items-center gap-2 bg-white rounded-xl px-4 py-3 border border-blue-100 shadow-sm">
+                             <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" className="text-blue-600">
+                               <line x1="12" y1="1" x2="12" y2="23"/>
+                               <path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/>
+                             </svg>
+                             <span className="text-[11px] font-bold text-blue-500 uppercase tracking-wider">Betrag</span>
+                             <span className="text-slate-900 font-bold text-base">{analysisResult.betrag} €</span>
+                           </div>
+
+                           {/* Buchungssatz Tag */}
+                           <div className="flex-1 min-w-[280px] bg-white rounded-xl px-4 py-3 border border-blue-100 shadow-sm">
+                             <div className="text-[11px] font-bold text-blue-500 uppercase tracking-wider mb-1.5">Buchungssatz</div>
+                             <div className="text-slate-900 font-semibold text-sm leading-relaxed">{analysisResult.buchungsvorschlag}</div>
+                           </div>
+                         </div>
+                       </div>
+                     )}
+                   </>
                  )}
 
                  {/* Suggested Name Card */}
